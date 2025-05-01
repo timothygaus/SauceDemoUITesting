@@ -10,15 +10,15 @@ public class InventoryPage extends BasePage {
 
     private String inventoryPageUrl = "https://www.saucedemo.com/inventory.html";
 
-    public InventoryPage(WebDriver driver) {
-        super(driver);
+    public InventoryPage(WebDriver webDriver) {
+        super(webDriver);
         PageFactory.initElements(webDriver, this);
     }
 
     @FindBy(id = "react-burger-menu-btn")
     WebElement burgerMenuBtn;
 
-    @FindBy(id = "shopping-cart-container")
+    @FindBy(css = "div.shopping_cart_container")
     WebElement shoppingCartContainer;
 
     @FindBy(css = "div.app_logo")
@@ -26,4 +26,10 @@ public class InventoryPage extends BasePage {
 
     @FindBy(css = "span.title")
     WebElement pageTitle;
+
+    @FindBy(css = "div.inventory_container")
+    WebElement inventoryContainer;
+
+    @FindBy(css = "div.inventory_list")
+    WebElement inventoryList;
 }

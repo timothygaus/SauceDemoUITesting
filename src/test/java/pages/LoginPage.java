@@ -38,8 +38,8 @@ public class LoginPage extends BasePage {
      * @param username String
      * @param password String
      */
-    public void login(String username, String password) {
-        login(username, password, true);
+    public InventoryPage login(String username, String password) {
+        return login(username, password, true);
     }
 
     /**
@@ -48,14 +48,23 @@ public class LoginPage extends BasePage {
      * @param password String
      * @param useLoginButton Boolean, set to true to use login button, set to false to use enter key
      */
-    public void login(String username, String password, boolean useLoginButton) {
+    public InventoryPage login(String username, String password, boolean useLoginButton) {
         type(usernameInput, username);
         type(passwordInput, password);
+
         if (useLoginButton) {
             click(loginButton);
         } else {
             passwordInput.sendKeys(Keys.ENTER);
         }
+
+        try {
+            wait.until(ExpectedConditions.urlContains("inventory"));
+        } catch (TimeoutException e) {
+            return null;
+        }
+
+        return new InventoryPage(webDriver);
     }
 
     public boolean waitForErrorToBeVisible() {

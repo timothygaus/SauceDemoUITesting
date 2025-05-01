@@ -12,9 +12,9 @@ public class BasePage {
     protected WebDriver webDriver;
     protected WebDriverWait wait;
 
-    public BasePage(WebDriver driver) {
+    public BasePage(WebDriver webDriver) {
         this.webDriver = webDriver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // update to read wait from config
+        this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(5)); // update to read wait from config
     }
 
     protected void click(WebElement element) {

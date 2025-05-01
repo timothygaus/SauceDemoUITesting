@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import pages.InventoryPage;
 import pages.LoginPage;
 
 public class LoginTests extends BaseTest {
@@ -42,24 +43,22 @@ public class LoginTests extends BaseTest {
     }
 
     @Test(dataProvider = "validLoginData")
-    public void testValidLogin(String username, String password) {
-        loginPage.login(username, password);
-
-        Assert.assertTrue(webDriver.getCurrentUrl().contains("inventory"), "Login with enter key failed or did not redirect to inventory");
+    public void testValidLoginWithLoginButton(String username, String password) {
+        InventoryPage inventoryPage = loginPage.login(username, password);
+        Assert.assertNotNull(inventoryPage, "Login with login button failed or did not redirect to inventory page");
     }
 
     @Test(dataProvider = "validLoginData")
-    public void testLoginButton(String username, String password) {
-        loginPage.login(username, password);
-
-        Assert.assertTrue(webDriver.getCurrentUrl().contains("inventory"), "Login with button failed or did not redirect to inventory");
+    public void testValidLoginWithEnterKey(String username, String password) {
+        InventoryPage inventoryPage = loginPage.login(username, password);
+        Assert.assertNotNull(inventoryPage, "Login with enter key failed or did not redirect to inventory page");
     }
 
     @Test(dataProvider = "invalidLoginData")
     public void testInvalidLogin(String username, String password) {
         loginPage.login(username, password, false);
 
-        Assert.assertTrue(loginPage.waitForErrorToBeVisible(), "Error message was not displayed for invalid user");
+        Assert.assertTrue(loginPage.waitForErrorToBeVisible(), "Error message was not displayed for invalid user when login was attempted");
     }
 
     @Test
