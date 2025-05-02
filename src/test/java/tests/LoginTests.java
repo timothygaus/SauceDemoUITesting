@@ -2,8 +2,8 @@ package tests;
 
 import framework.base.BaseTest;
 import framework.config.ConfigReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -13,7 +13,7 @@ import pages.LoginPage;
 
 public class LoginTests extends BaseTest {
 
-    private static final Logger log = LoggerFactory.getLogger(LoginTests.class);
+    //private static final Logger log = LoggerFactory.getLogger(LoginTests.class);
     private LoginPage loginPage;
 
     @BeforeMethod

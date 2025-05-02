@@ -25,11 +25,19 @@ public class InventoryPage extends BasePage {
     WebElement appLogo;
 
     @FindBy(css = "span.title")
-    WebElement pageTitle;
+    WebElement headerSecondaryContainerTitle; //TODO: might rename this to something shorter
 
     @FindBy(css = "div.inventory_container")
     WebElement inventoryContainer;
 
     @FindBy(css = "div.inventory_list")
     WebElement inventoryList;
+
+    public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
+    public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
+    public WebElement getAppLogo() {return appLogo;}
+    public WebElement getHeaderSecondaryContainerTitle() {return headerSecondaryContainerTitle;}
+    public WebElement getInventoryContainer() {return inventoryContainer;}
+    public WebElement getInventoryList() {return inventoryList;}
+
 }
