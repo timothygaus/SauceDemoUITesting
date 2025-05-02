@@ -25,6 +25,9 @@ public class InventoryPage extends BasePage {
     @FindBy(css = "div.shopping_cart_container")
     WebElement shoppingCartContainer;
 
+    @FindBy(css = "a.shopping_cart_link")
+    WebElement shoppingCartLink;
+
     @FindBy(css = "div.app_logo")
     WebElement appLogo;
 
@@ -53,7 +56,7 @@ public class InventoryPage extends BasePage {
     public WebElement getBurgerMenu() {return burgerMenu;}
 
     public CartPage clickCartButton() {
-        getShoppingCartContainer().click();
+        click(shoppingCartLink);
 
         try {
             wait.until(ExpectedConditions.urlContains("cart"));
@@ -64,16 +67,33 @@ public class InventoryPage extends BasePage {
         return new CartPage(webDriver);
     }
 
+    public InventoryItemPage clickInventoryItem(String itemName) {
+        WebElement inventoryItem = findInventoryItemByName(itemName);
+        click(inventoryItem);
+
+        try {
+            wait.until(ExpectedConditions.urlContains("inventory-item"));
+        } catch (TimeoutException e) {
+            return null;
+        }
+
+        return new InventoryItemPage(webDriver, inventoryItem);
+    }
+
     public boolean isItemPresent (String itemName) {
+        return findInventoryItemByName(itemName) != null;
+    }
+
+    public WebElement findInventoryItemByName(String itemName) {
         try {
             for(WebElement item : inventoryItemNames) {
-                if(item.getText().equalsIgnoreCase(itemName)) {
-                    return true;
+                if (item.getText().equalsIgnoreCase(itemName)) {
+                    return item;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 }

@@ -7,10 +7,11 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import pages.InventoryItemPage;
 import pages.InventoryPage;
 import pages.LoginPage;
 
-public class InventoryTest extends BaseTest {
+public class InventoryTests extends BaseTest {
 
     private InventoryPage inventoryPage;
 
@@ -99,5 +100,12 @@ public class InventoryTest extends BaseTest {
                 inventoryPage.getBurgerMenu()
         );
         Assert.assertFalse(isVisible, "Burger menu unexpectedly displayed on Inventory page initialization");
+    }
+
+    @Test(dataProvider = "inventoryItemNames")
+    public void testClickInventoryItemName(String itemName) {
+        InventoryItemPage itemPage = inventoryPage.clickInventoryItem(itemName);
+        Assert.assertTrue(webDriver.getCurrentUrl().contains("inventory-item"), "Clicking name for " + itemName + " did not correctly navigate to the Inventory Item page for that item.");
+        Assert.assertEquals(itemPage.getInventoryDetailsName().getText(), itemName, "Clicking name for " + itemName + " did not correctly navigate to the Inventory Item page for that item. Instead, navigated to " + itemPage.getInventoryDetailsName().getText());
     }
 }
