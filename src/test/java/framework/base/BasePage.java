@@ -1,5 +1,6 @@
 package framework.base;
 
+import framework.config.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,7 +15,7 @@ public class BasePage {
 
     public BasePage(WebDriver webDriver) {
         this.webDriver = webDriver;
-        this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(5)); // update to read wait from config
+        this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(Long.parseLong(ConfigReader.getProperty("implicit.wait"))));
     }
 
     protected void click(WebElement element) {
@@ -27,13 +28,5 @@ public class BasePage {
 
     protected String getPageTitle() {
         return webDriver.getTitle();
-    }
-
-    protected boolean isElementDisplayed(WebElement webElement) {
-        try {
-            return webElement.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
     }
 }
