@@ -1,6 +1,7 @@
 package pages;
 
 import framework.base.BasePage;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -56,9 +57,9 @@ public class InventoryPage extends BasePage {
     public WebElement getBurgerMenu() {return burgerMenu;}
 
     public CartPage clickCartButton() {
-        click(shoppingCartLink);
-
         try {
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
+            jsExecutor.executeScript("arguments[0].click();", shoppingCartLink);
             wait.until(ExpectedConditions.urlContains("cart"));
         } catch (TimeoutException e) {
             return null;
@@ -69,9 +70,9 @@ public class InventoryPage extends BasePage {
 
     public InventoryItemPage clickInventoryItem(String itemName) {
         WebElement inventoryItem = findInventoryItemByName(itemName);
-        click(inventoryItem);
 
         try {
+            click(inventoryItem);
             wait.until(ExpectedConditions.urlContains("inventory-item"));
         } catch (TimeoutException e) {
             return null;
