@@ -1,10 +1,7 @@
 package pages;
 
 import framework.base.BasePage;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -30,6 +27,20 @@ public class LoginPage extends BasePage {
 
     @FindBy(css = "div.error-message-container.error")
     WebElement errorMessage;
+
+    @FindBy(css = "[data-test='error-button']")
+    private WebElement errorButton;
+
+    public WebElement getUsernameInput() {return usernameInput;}
+    public WebElement getPasswordInput() {return passwordInput;}
+    public WebElement getLoginButton() {return loginButton;}
+    public WebElement getLoginLogo() {return loginLogo;}
+    public WebElement getErrorMessage() {return errorMessage;}
+    public WebElement getErrorButton() {return errorButton;}
+
+    public String getUsernameFieldValue() {return usernameInput.getText();}
+    public String getPasswordFieldValue() {return passwordInput.getText();}
+    public String getLoginLogoValue() {return loginLogo.getText();}
 
     /**
      * Enters values into the username and password fields and attempts to log in
@@ -58,6 +69,17 @@ public class LoginPage extends BasePage {
             passwordInput.sendKeys(Keys.ENTER);
         }
 
+        // short-circuit if the error message is displayed immediately
+        try {
+            WebElement errorElement = webDriver.findElement(By.cssSelector("h3[data-test='error']"));
+            if (errorElement.isDisplayed()) {
+                return null;
+            }
+        } catch (NoSuchElementException ignored) {
+
+        }
+
+
         try {
             wait.until(ExpectedConditions.urlContains("inventory"));
         } catch (TimeoutException e) {
@@ -74,17 +96,5 @@ public class LoginPage extends BasePage {
         } catch (TimeoutException e) {
             return false;
         }
-    }
-
-    public String getUsernameFieldValue() {
-        return usernameInput.getText();
-    }
-
-    public String getPasswordFieldValue() {
-        return passwordInput.getText();
-    }
-
-    public String getLoginLogoValue() {
-        return loginLogo.getText();
     }
 }
