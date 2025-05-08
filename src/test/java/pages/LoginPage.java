@@ -29,7 +29,7 @@ public class LoginPage extends BasePage {
     WebElement errorMessage;
 
     @FindBy(css = "[data-test='error-button']")
-    private WebElement errorButton;
+    WebElement errorButton;
 
     // Expected error messages for different failed login cases
     private static final String invalidLoginErrorText = "Epic sadface: Username and password do not match any user in this service";
