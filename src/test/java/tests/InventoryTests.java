@@ -60,13 +60,13 @@ public class InventoryTests extends BaseTest {
     @Test
     public void testAppLogo() {
         String appLogoText = inventoryPage.getAppLogo().getText();
-        Assert.assertEquals(appLogoText, "Swag Labs", "Expected App Logo on Inventory Page to be Swag Labs, but got " + appLogoText);
+        Assert.assertEquals(appLogoText, inventoryPage.getExpectedAppLogoText(), "Expected App Logo on Inventory Page to be " + inventoryPage.getExpectedAppLogoText() + " but got " + appLogoText);
     }
 
     @Test
-    public void testHeaderTitle() {
-        String headerTitleText = inventoryPage.getHeaderSecondaryContainerTitle().getText();
-        Assert.assertEquals(headerTitleText, "Products", "Expected Header Title on Inventory Page to be Products, but got " + headerTitleText);
+    public void testSecondaryHeaderTitle() {
+        String headerTitleText = inventoryPage.getSecondaryHeaderTitle().getText();
+        Assert.assertEquals(headerTitleText, inventoryPage.getExpectedSecondaryHeaderTitleText(), "Expected Secondary Header Title on Inventory Page to be " + inventoryPage.getExpectedSecondaryHeaderTitleText() + " but got " + headerTitleText);
     }
 
     @Test
@@ -88,8 +88,8 @@ public class InventoryTests extends BaseTest {
 
     @Test
     public void testClickingBurgerMenuButton() {
-        inventoryPage.getBurgerMenuBtn().click();
-        Assert.assertTrue(inventoryPage.getBurgerMenuBtn().isDisplayed(), "Menu did not appear after clicking burger menu button on Inventory page");
+        inventoryPage.clickBurgerMenuButton();
+        Assert.assertTrue(inventoryPage.isBurgerMenuDisplayed(), "Menu did not appear after clicking burger menu button on Inventory page");
     }
 
     @Test

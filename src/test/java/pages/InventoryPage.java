@@ -33,7 +33,7 @@ public class InventoryPage extends BasePage {
     WebElement appLogo;
 
     @FindBy(css = "span.title")
-    WebElement headerSecondaryContainerTitle; //TODO: might rename this to something shorter
+    WebElement secondaryHeaderTitle;
 
     @FindBy(css = "div.inventory_container")
     WebElement inventoryContainer;
@@ -47,14 +47,23 @@ public class InventoryPage extends BasePage {
     @FindBy(css = "div.bm-menu")
     WebElement burgerMenu;
 
+    @FindBy(css = "div.bm-menu-wrap")
+    WebElement burgerMenuWrap;
+
+    private final String EXPECTED_APP_LOGO_TEXT = "Swag Labs";
+    private final String EXPECTED_SECONDARY_HEADER_TITLE_TEXT = "Products";
+
     public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
     public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
     public WebElement getAppLogo() {return appLogo;}
-    public WebElement getHeaderSecondaryContainerTitle() {return headerSecondaryContainerTitle;}
+    public WebElement getSecondaryHeaderTitle() {return secondaryHeaderTitle;}
     public WebElement getInventoryContainer() {return inventoryContainer;}
     public WebElement getInventoryList() {return inventoryList;}
     public List<WebElement> getInventoryItemNames() {return inventoryItemNames;}
     public WebElement getBurgerMenu() {return burgerMenu;}
+    public WebElement getBurgerMenuWrap() {return burgerMenuWrap;}
+    public String getExpectedAppLogoText() {return EXPECTED_APP_LOGO_TEXT;}
+    public String getExpectedSecondaryHeaderTitleText() {return EXPECTED_SECONDARY_HEADER_TITLE_TEXT;}
 
     public CartPage clickCartButton() {
         try {
@@ -72,13 +81,23 @@ public class InventoryPage extends BasePage {
         WebElement inventoryItem = findInventoryItemByName(itemName);
 
         try {
-            click(inventoryItem);
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
+            jsExecutor.executeScript("arguments[0].click()", inventoryItem);
             wait.until(ExpectedConditions.urlContains("inventory-item"));
         } catch (TimeoutException e) {
             return null;
         }
 
         return new InventoryItemPage(webDriver, inventoryItem);
+    }
+
+    public void clickBurgerMenuButton() {
+        try {
+            click(burgerMenuBtn);
+            wait.until(driver -> isBurgerMenuDisplayed());
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isItemPresent (String itemName) {
@@ -96,5 +115,9 @@ public class InventoryPage extends BasePage {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean isBurgerMenuDisplayed() {
+        return burgerMenu.getAttribute("hidden") == null && burgerMenuWrap.isDisplayed();
     }
 }
