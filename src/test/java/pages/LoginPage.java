@@ -32,10 +32,10 @@ public class LoginPage extends BasePage {
     WebElement errorButton;
 
     // Expected error messages for different failed login cases
-    private static final String invalidLoginErrorText = "Epic sadface: Username and password do not match any user in this service";
-    private static final String lockedOutUserLoginErrorText = "Epic sadface: Sorry, this user has been locked out.";
-    private static final String missingUsernameErrorText = "Epic sadface: Username is required";
-    private static final String missingPasswordErrorText = "Epic sadface: Password is required";
+    private final String INVALID_ERROR_LOGIN_TEXT = "Epic sadface: Username and password do not match any user in this service";
+    private final String LOCKED_OUT_USER_LOGIN_ERROR_TEXT = "Epic sadface: Sorry, this user has been locked out.";
+    private final String MISSING_USERNAME_ERROR_TEXT = "Epic sadface: Username is required";
+    private final String MISSING_PASSWORD_ERROR_TEXT = "Epic sadface: Password is required";
 
     public WebElement getUsernameInput() {return usernameInput;}
     public WebElement getPasswordInput() {return passwordInput;}
@@ -44,10 +44,10 @@ public class LoginPage extends BasePage {
     public WebElement getErrorMessage() {return errorMessage;}
     public WebElement getErrorButton() {return errorButton;}
 
-    public String getInvalidLoginErrorText() {return invalidLoginErrorText;}
-    public String getLockedOutUserLoginErrorText() {return lockedOutUserLoginErrorText;}
-    public String getMissingUsernameErrorText() {return missingUsernameErrorText;}
-    public String getMissingPasswordErrorText() {return missingPasswordErrorText;}
+    public String getInvalidLoginErrorText() {return INVALID_ERROR_LOGIN_TEXT;}
+    public String getLockedOutUserLoginErrorText() {return LOCKED_OUT_USER_LOGIN_ERROR_TEXT;}
+    public String getMissingUsernameErrorText() {return MISSING_USERNAME_ERROR_TEXT;}
+    public String getMissingPasswordErrorText() {return MISSING_PASSWORD_ERROR_TEXT;}
 
     public String getUsernameFieldValue() {return usernameInput.getText();}
     public String getPasswordFieldValue() {return passwordInput.getText();}
