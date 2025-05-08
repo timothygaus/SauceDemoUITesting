@@ -31,16 +31,27 @@ public class LoginPage extends BasePage {
     @FindBy(css = "[data-test='error-button']")
     private WebElement errorButton;
 
+    // Expected error messages for different failed login cases
+    private static final String invalidLoginErrorText = "Epic sadface: Username and password do not match any user in this service";
+    private static final String lockedOutUserLoginErrorText = "Epic sadface: Sorry, this user has been locked out.";
+    private static final String missingUsernameErrorText = "Epic sadface: Username is required";
+    private static final String missingPasswordErrorText = "Epic sadface: Password is required";
+
     public WebElement getUsernameInput() {return usernameInput;}
     public WebElement getPasswordInput() {return passwordInput;}
     public WebElement getLoginButton() {return loginButton;}
     public WebElement getLoginLogo() {return loginLogo;}
     public WebElement getErrorMessage() {return errorMessage;}
     public WebElement getErrorButton() {return errorButton;}
+    public String getInvalidLoginErrorText() {return invalidLoginErrorText;}
+    public String getLockedOutUserLoginErrorText() {return lockedOutUserLoginErrorText;}
+    public String getMissingUsernameErrorText() {return missingUsernameErrorText;}
+    public String getMissingPasswordErrorText() {return missingPasswordErrorText;}
 
     public String getUsernameFieldValue() {return usernameInput.getText();}
     public String getPasswordFieldValue() {return passwordInput.getText();}
     public String getLoginLogoValue() {return loginLogo.getText();}
+    public String getErrorMessageText() {return errorMessage.getText();}
 
     /**
      * Enters values into the username and password fields and attempts to log in
@@ -76,9 +87,8 @@ public class LoginPage extends BasePage {
                 return null;
             }
         } catch (NoSuchElementException ignored) {
-
+            // continue if the error is displayed or cannot be found
         }
-
 
         try {
             wait.until(ExpectedConditions.urlContains("inventory"));

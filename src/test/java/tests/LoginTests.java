@@ -36,17 +36,6 @@ public class LoginTests extends BaseTest {
         };
     }
 
-    @DataProvider(name = "invalidLoginData")
-    public static Object [][] provideInvalidLoginData() {
-        return new Object[][] {
-                {"locked_out_user", "secret_sauce"},
-                {"standard_user", "wrong_password"},
-                {"", ""},
-                {"standard_user", ""},
-                {"", "secret_sauce"}
-        };
-    }
-
     @Test(dataProvider = "validLoginData")
     public void testValidLoginWithLoginButton(String username, String password) {
         InventoryPage inventoryPage = loginPage.login(username, password);
@@ -59,15 +48,55 @@ public class LoginTests extends BaseTest {
         Assert.assertNotNull(inventoryPage, "Login with enter key failed or did not redirect to inventory page");
     }
 
-    @Test(dataProvider = "invalidLoginData")
-    public void testInvalidLogin(String username, String password) {
-        loginPage.login(username, password, false);
+    @Test
+    public void testLoginWithIncorrectPassword() {
+        String username = "standard_user";
+        String password = "incorrect_password";
+        loginPage.login(username, password);
+        Assert.assertTrue(loginPage.waitForErrorToBeVisible(), "Error message was not displayed for locked out user when login was attempted");
 
-        Assert.assertTrue(loginPage.waitForErrorToBeVisible(), "Error message was not displayed for invalid user when login was attempted");
+        String errorMessageActual = loginPage.getErrorMessageText();
+        Assert.assertEquals(errorMessageActual, loginPage.getInvalidLoginErrorText(), "Expected error message text to be " + loginPage.getInvalidLoginErrorText() + " but got " + errorMessageActual);
     }
 
-    @Test(dataProvider = "invalidLoginData") //TODO: not sure if testing all of these cases is necessary
-    public void testErrorButton(String username, String password) {
+    @Test
+    public void testLoginWithLockedOutUser() {
+        String username = "locked_out_user";
+        String password = "secret_sauce";
+        loginPage.login(username, password);
+        Assert.assertTrue(loginPage.waitForErrorToBeVisible(), "Error message was not displayed for locked out user when login was attempted");
+
+        String errorMessageActual = loginPage.getErrorMessageText();
+        Assert.assertEquals(errorMessageActual, loginPage.getLockedOutUserLoginErrorText(),
+                "Expected error message after locked out user attempts login to say " + loginPage.getLockedOutUserLoginErrorText() + " but got " + errorMessageActual);
+    }
+
+    @Test
+    public void testLoginWithMissingUsername() {
+        String username = "";
+        String password = "secret_sauce";
+        loginPage.login(username, password);
+        Assert.assertTrue(loginPage.waitForErrorToBeVisible(), "Error message was not displayed for invalid user when login was attempted");
+
+        String errorMessageActual = loginPage.getErrorMessageText();
+        Assert.assertEquals(errorMessageActual, loginPage.getMissingUsernameErrorText(), "Expected error message text to be " + loginPage.getMissingUsernameErrorText() + " but got " + errorMessageActual);
+    }
+
+    @Test
+    public void testLoginWithMissingPassword() {
+        String username = "standard_user";
+        String password = "";
+        loginPage.login(username, password);
+        Assert.assertTrue(loginPage.waitForErrorToBeVisible(), "Error message was not displayed for invalid user when login was attempted");
+
+        String errorMessageActual = loginPage.getErrorMessageText();
+        Assert.assertEquals(errorMessageActual, loginPage.getMissingPasswordErrorText(), "Expected error message text to be " + loginPage.getMissingPasswordErrorText() + " but got " + errorMessageActual);
+    }
+
+    @Test()
+    public void testErrorButton() {
+        String username = "standard_user";
+        String password = "incorrect_password";
         loginPage.login(username, password);
         loginPage.getErrorButton().click();
 
