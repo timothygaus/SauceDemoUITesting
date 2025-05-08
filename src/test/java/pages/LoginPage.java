@@ -43,6 +43,7 @@ public class LoginPage extends BasePage {
     public WebElement getLoginLogo() {return loginLogo;}
     public WebElement getErrorMessage() {return errorMessage;}
     public WebElement getErrorButton() {return errorButton;}
+
     public String getInvalidLoginErrorText() {return invalidLoginErrorText;}
     public String getLockedOutUserLoginErrorText() {return lockedOutUserLoginErrorText;}
     public String getMissingUsernameErrorText() {return missingUsernameErrorText;}
