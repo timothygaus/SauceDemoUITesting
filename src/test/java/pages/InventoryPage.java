@@ -102,7 +102,7 @@ public class InventoryPage extends BasePage {
     public boolean isBurgerMenuDisplayed() {
         try {
             wait.until(ExpectedConditions.visibilityOf(burgerMenuWrap));
-            return burgerMenuWrap.isDisplayed() && Objects.equals(burgerMenuWrap.getAttribute("hidden"), null);
+            return burgerMenuWrap.isDisplayed() && Objects.equals(burgerMenuWrap.getAttribute("hidden"), "true");
         } catch (Exception e) {
             return false;
         }
