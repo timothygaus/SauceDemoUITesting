@@ -2,7 +2,6 @@ package tests;
 
 import framework.base.BaseTest;
 import framework.config.ConfigReader;
-import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -94,12 +93,7 @@ public class InventoryTests extends BaseTest {
 
     @Test
     public void testAbsenceOfBurgerMenu() {
-        JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
-        boolean isVisible = (boolean) jsExecutor.executeScript(
-                "return window.getComputedStyle(arguments[0]).hidden == 'true';",
-                inventoryPage.getBurgerMenu()
-        );
-        Assert.assertFalse(isVisible, "Burger menu unexpectedly displayed on Inventory page initialization");
+        Assert.assertFalse(inventoryPage.isBurgerMenuDisplayed(), "Burger menu unexpectedly displayed on Inventory page initialization");
     }
 
     @Test(dataProvider = "inventoryItemNames")

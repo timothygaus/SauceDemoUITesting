@@ -21,14 +21,7 @@ public class CartPage extends BasePage {
     WebElement continueShoppingButton;
 
     public InventoryPage clickContinueShoppingButton() {
-        click(getContinueShoppingButton());
-
-        try {
-            wait.until(ExpectedConditions.urlContains("inventory"));
-        } catch (TimeoutException e) {
-            return null;
-        }
-
+        click(getContinueShoppingButton(), () -> webDriver.getCurrentUrl().contains("inventory"));
         return new InventoryPage(webDriver);
     }
 }

@@ -76,31 +76,15 @@ public class LoginPage extends BasePage {
         type(passwordInput, password);
 
         if (useLoginButton) {
-            click(loginButton);
+            click(loginButton, () -> webDriver.getCurrentUrl().contains("inventory"));
         } else {
             passwordInput.sendKeys(Keys.ENTER);
-        }
-
-        // short-circuit if the error message is displayed immediately
-        try {
-            WebElement errorElement = webDriver.findElement(By.cssSelector("h3[data-test='error']"));
-            if (errorElement.isDisplayed()) {
-                return null;
-            }
-        } catch (NoSuchElementException ignored) {
-            // continue if the error is displayed or cannot be found
-        }
-
-        try {
-            wait.until(ExpectedConditions.urlContains("inventory"));
-        } catch (TimeoutException e) {
-            return null;
         }
 
         return new InventoryPage(webDriver);
     }
 
-    public boolean waitForErrorToBeVisible() {
+    public boolean isLoginErrorMessageVisible() {
         try {
             wait.until(ExpectedConditions.visibilityOf(errorMessage));
             return true;

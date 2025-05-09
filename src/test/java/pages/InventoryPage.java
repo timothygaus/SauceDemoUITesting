@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
+import java.util.Objects;
 
 public class InventoryPage extends BasePage {
 
@@ -66,38 +67,19 @@ public class InventoryPage extends BasePage {
     public String getExpectedSecondaryHeaderTitleText() {return EXPECTED_SECONDARY_HEADER_TITLE_TEXT;}
 
     public CartPage clickCartButton() {
-        try {
-            JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
-            jsExecutor.executeScript("arguments[0].click();", shoppingCartLink);
-            wait.until(ExpectedConditions.urlContains("cart"));
-        } catch (TimeoutException e) {
-            return null;
-        }
-
+        click(shoppingCartLink, () -> webDriver.getCurrentUrl().contains("cart"));
+        wait.until(ExpectedConditions.urlContains("cart"));
         return new CartPage(webDriver);
     }
 
     public InventoryItemPage clickInventoryItem(String itemName) {
         WebElement inventoryItem = findInventoryItemByName(itemName);
-
-        try {
-            JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
-            jsExecutor.executeScript("arguments[0].click()", inventoryItem);
-            wait.until(ExpectedConditions.urlContains("inventory-item"));
-        } catch (TimeoutException e) {
-            return null;
-        }
-
+        click(inventoryItem, () -> webDriver.getCurrentUrl().contains("inventory-item"));
         return new InventoryItemPage(webDriver, inventoryItem);
     }
 
     public void clickBurgerMenuButton() {
-        try {
-            click(burgerMenuBtn);
-            wait.until(driver -> isBurgerMenuDisplayed());
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        }
+        click(burgerMenuBtn, this::isBurgerMenuDisplayed);
     }
 
     public boolean isItemPresent (String itemName) {
@@ -118,6 +100,11 @@ public class InventoryPage extends BasePage {
     }
 
     public boolean isBurgerMenuDisplayed() {
-        return burgerMenu.getAttribute("hidden") == null && burgerMenuWrap.isDisplayed();
+        try {
+            wait.until(ExpectedConditions.visibilityOf(burgerMenuWrap));
+            return burgerMenuWrap.isDisplayed() && Objects.equals(burgerMenuWrap.getAttribute("hidden"), null);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

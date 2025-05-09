@@ -53,7 +53,7 @@ public class LoginTests extends BaseTest {
         String username = "standard_user";
         String password = "incorrect_password";
         loginPage.login(username, password);
-        Assert.assertTrue(loginPage.waitForErrorToBeVisible(), "Error message was not displayed for locked out user when login was attempted");
+        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for locked out user when login was attempted");
 
         String errorMessageActual = loginPage.getErrorMessageText();
         Assert.assertEquals(errorMessageActual, loginPage.getInvalidLoginErrorText(), "Expected error message text to be " + loginPage.getInvalidLoginErrorText() + " but got " + errorMessageActual);
@@ -64,7 +64,7 @@ public class LoginTests extends BaseTest {
         String username = "locked_out_user";
         String password = "secret_sauce";
         loginPage.login(username, password);
-        Assert.assertTrue(loginPage.waitForErrorToBeVisible(), "Error message was not displayed for locked out user when login was attempted");
+        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for locked out user when login was attempted");
 
         String errorMessageActual = loginPage.getErrorMessageText();
         Assert.assertEquals(errorMessageActual, loginPage.getLockedOutUserLoginErrorText(),
@@ -76,7 +76,7 @@ public class LoginTests extends BaseTest {
         String username = "";
         String password = "secret_sauce";
         loginPage.login(username, password);
-        Assert.assertTrue(loginPage.waitForErrorToBeVisible(), "Error message was not displayed for invalid user when login was attempted");
+        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for invalid user when login was attempted");
 
         String errorMessageActual = loginPage.getErrorMessageText();
         Assert.assertEquals(errorMessageActual, loginPage.getMissingUsernameErrorText(), "Expected error message text to be " + loginPage.getMissingUsernameErrorText() + " but got " + errorMessageActual);
@@ -87,7 +87,7 @@ public class LoginTests extends BaseTest {
         String username = "standard_user";
         String password = "";
         loginPage.login(username, password);
-        Assert.assertTrue(loginPage.waitForErrorToBeVisible(), "Error message was not displayed for invalid user when login was attempted");
+        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for invalid user when login was attempted");
 
         String errorMessageActual = loginPage.getErrorMessageText();
         Assert.assertEquals(errorMessageActual, loginPage.getMissingPasswordErrorText(), "Expected error message text to be " + loginPage.getMissingPasswordErrorText() + " but got " + errorMessageActual);
@@ -100,7 +100,7 @@ public class LoginTests extends BaseTest {
         loginPage.login(username, password);
         loginPage.getErrorButton().click();
 
-        Assert.assertFalse(loginPage.waitForErrorToBeVisible(), "Error message did not close after clicking the error button");
+        Assert.assertFalse(loginPage.isLoginErrorMessageVisible(), "Error message did not close after clicking the error button");
     }
 
     @Test
@@ -125,7 +125,7 @@ public class LoginTests extends BaseTest {
 
     @Test
     public void testErrorMessageHidden() {
-        Assert.assertFalse(loginPage.waitForErrorToBeVisible(), "Error message was displayed on page initialization unexpectedly");
+        Assert.assertFalse(loginPage.isLoginErrorMessageVisible(), "Error message was displayed on page initialization unexpectedly");
     }
 
     @Test
