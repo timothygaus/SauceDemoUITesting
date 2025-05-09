@@ -1,8 +1,6 @@
 package pages;
 
 import framework.base.BasePage;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
-import java.util.Objects;
 
 public class InventoryPage extends BasePage {
 
@@ -79,7 +76,7 @@ public class InventoryPage extends BasePage {
     }
 
     public void clickBurgerMenuButton() {
-        click(burgerMenuBtn, this::isBurgerMenuDisplayed);
+        click(burgerMenuBtn, () -> !isBurgerMenuHidden());
     }
 
     public boolean isItemPresent (String itemName) {
@@ -99,10 +96,9 @@ public class InventoryPage extends BasePage {
         return null;
     }
 
-    public boolean isBurgerMenuDisplayed() {
+    public boolean isBurgerMenuHidden() {
         try {
-            wait.until(ExpectedConditions.visibilityOf(burgerMenuWrap));
-            return burgerMenuWrap.isDisplayed() && Objects.equals(burgerMenuWrap.getAttribute("hidden"), "true");
+            return wait.until(ExpectedConditions.domAttributeToBe(burgerMenuWrap, "hidden", "true"));
         } catch (Exception e) {
             return false;
         }

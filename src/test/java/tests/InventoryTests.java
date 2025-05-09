@@ -88,12 +88,12 @@ public class InventoryTests extends BaseTest {
     @Test
     public void testClickingBurgerMenuButton() {
         inventoryPage.clickBurgerMenuButton();
-        Assert.assertTrue(inventoryPage.isBurgerMenuDisplayed(), "Menu did not appear after clicking burger menu button on Inventory page");
+        Assert.assertFalse(inventoryPage.isBurgerMenuHidden(), "Menu did not appear after clicking burger menu button on Inventory page");
     }
 
     @Test
     public void testAbsenceOfBurgerMenu() {
-        Assert.assertFalse(inventoryPage.isBurgerMenuDisplayed(), "Burger menu unexpectedly displayed on Inventory page initialization");
+        Assert.assertTrue(inventoryPage.isBurgerMenuHidden(), "Burger menu unexpectedly displayed on Inventory page initialization");
     }
 
     @Test(dataProvider = "inventoryItemNames")
