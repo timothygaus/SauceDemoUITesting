@@ -10,6 +10,9 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class DriverManager {
 
     public WebDriver webDriver;
@@ -23,12 +26,18 @@ public class DriverManager {
 
     private void initializeDriver() {
         String browser = ConfigReader.getProperty("browser");
+        boolean isHeadless = Boolean.parseBoolean(ConfigReader.getProperty("headless"));
 
         switch (browser.toLowerCase()) {
             case "chrome":
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
+
+                if (isHeadless) {
+                   chromeOptions.addArguments("--headless");
+                }
+
                 webDriver = new ChromeDriver(chromeOptions);
                 break;
 
@@ -36,6 +45,11 @@ public class DriverManager {
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.addArguments("--start-maximized");
+
+                if (isHeadless) {
+                    firefoxOptions.addArguments("--headless");
+                }
+
                 webDriver = new FirefoxDriver(firefoxOptions);
                 break;
 
@@ -43,6 +57,11 @@ public class DriverManager {
                 WebDriverManager.edgedriver().setup();
                 EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.addArguments("--start-maximized");
+
+                if (isHeadless) {
+                    edgeOptions.addArguments("--headless");
+                }
+
                 webDriver = new EdgeDriver(edgeOptions);
                 break;
 
