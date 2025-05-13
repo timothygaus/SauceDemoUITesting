@@ -30,11 +30,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build with Gradle
+      - name: Build and Test
         run: ./gradlew build
-
-      - name: Run tests
-        run: ./gradlew test
 
       - name: Upload test report
         if: always()
