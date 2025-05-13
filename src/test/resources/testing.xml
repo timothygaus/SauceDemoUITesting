@@ -1,0 +1,9 @@
+<suite name="Test Suite" parallel="methods" thread_count="4">
+    <test name="All Tests">
+        <classes>
+            <class name="tests.LoginTests"/>
+            <class name="tests.InventoryTests"/>
+            <class name="tests.CartTests"/>
+        </classes>
+    </test>
+</suite>
