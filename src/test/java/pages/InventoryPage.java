@@ -66,6 +66,9 @@ public class InventoryPage extends BasePage {
     public CartPage clickCartButton() {
         click(shoppingCartLink, () -> webDriver.getCurrentUrl().contains("cart"));
         wait.until(ExpectedConditions.urlContains("cart"));
+        if (!webDriver.getCurrentUrl().contains("cart")) {
+            throw new IllegalStateException("Failed to navigate to the Cart page.");
+        }
         return new CartPage(webDriver);
     }
 

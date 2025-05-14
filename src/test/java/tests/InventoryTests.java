@@ -16,10 +16,7 @@ public class InventoryTests extends BaseTest {
 
     @BeforeMethod
     public void initializeInventoryTest() {
-        webDriver.get(ConfigReader.getProperty("base.url"));
-        LoginPage loginPage = new LoginPage(webDriver);
-        inventoryPage = loginPage.login("standard_user", "secret_sauce");
-        Assert.assertNotNull(inventoryPage, "Failed to navigate to the Inventory Page after login.");
+        initializeToInventoryPage();
     }
 
     //TODO: Seems like this data would be better stored in a separate file.
