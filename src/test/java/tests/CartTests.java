@@ -16,9 +16,7 @@ public class CartTests extends BaseTest {
 
     @BeforeMethod
     public void initializeCartTest() {
-        InventoryPage inventoryPage = initializeToInventoryPage();
-        cartPage = inventoryPage.clickCartButton();
-        Assert.assertNotNull(cartPage, "Failed to navigate to the Cart page.");
+        inventoryPage = initializeToInventoryPage();
     }
 
     @Test

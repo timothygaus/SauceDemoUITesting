@@ -12,6 +12,6 @@ public class InventoryItemTests extends BaseTest {
 
     @BeforeMethod
     public void initializeInventoryItemTest() {
-        InventoryPage inventoryPage = initializeToInventoryPage();
+        inventoryPage = initializeToInventoryPage();
     }
 }

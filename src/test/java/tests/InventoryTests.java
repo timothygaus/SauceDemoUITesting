@@ -16,7 +16,7 @@ public class InventoryTests extends BaseTest {
 
     @BeforeMethod
     public void initializeInventoryTest() {
-        initializeToInventoryPage();
+        inventoryPage = initializeToInventoryPage();
     }
 
     //TODO: Seems like this data would be better stored in a separate file.

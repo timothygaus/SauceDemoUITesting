@@ -8,9 +8,10 @@ import pages.InventoryPage;
 public class CheckoutStepTwoTests extends BaseTest {
 
     private CheckoutStepTwoPage checkoutStepTwoPage;
+    private InventoryPage inventoryPage;
 
     @BeforeMethod
     public void initializeCheckoutStepTwoTest() {
-        InventoryPage inventoryPage = initializeToInventoryPage();
+        inventoryPage = initializeToInventoryPage();
     }
 }
