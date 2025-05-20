@@ -75,7 +75,7 @@ public class InventoryPage extends BasePage {
     public InventoryItemPage clickInventoryItem(String itemName) {
         WebElement inventoryItem = findInventoryItemByName(itemName);
         click(inventoryItem, () -> webDriver.getCurrentUrl().contains("inventory-item"));
-        return new InventoryItemPage(webDriver, inventoryItem);
+        return new InventoryItemPage(webDriver);
     }
 
     public void clickBurgerMenuButton() {

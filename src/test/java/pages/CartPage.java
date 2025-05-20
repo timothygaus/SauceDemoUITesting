@@ -47,6 +47,19 @@ public class CartPage extends BasePage {
     @FindBy(css = "div.cart_item")
     List<WebElement> cartItems;
 
+    @FindBy(css = "span.shopping_cart_badge")
+    WebElement shoppingCartBadge;
+
+    public WebElement getCheckoutButton() {return checkoutButton;}
+    public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
+    public WebElement getShoppingCartLink() {return shoppingCartLink;}
+    public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
+    public WebElement getCartDescriptionLabel() {return cartDescriptionLabel;}
+    public WebElement getCartQuantityLabel() {return cartQuantityLabel;}
+    public WebElement getAppLogo() {return appLogo;}
+    public List<WebElement> getCartItems() {return cartItems;}
+    public WebElement getShoppingCartBadge() {return shoppingCartBadge;}
+
     /**
      * Gets the cart_item WebElement for a given item name
      * @param itemName String name of the item
@@ -102,8 +115,31 @@ public class CartPage extends BasePage {
         return cartItem.findElement(By.cssSelector("button.btn.btn_secondary.btn_small.cart_button"));
     }
 
+    /**
+     * Clicks the continue shopping button and navigates to the Inventory page
+     * @return InventoryPage
+     */
     public InventoryPage clickContinueShoppingButton() {
         click(getContinueShoppingButton(), () -> webDriver.getCurrentUrl().contains("inventory"));
         return new InventoryPage(webDriver);
+    }
+
+    /**
+     * Clicks the remove button for a given cart_item WebElement
+     * @param cartItem cart_item WebElement
+     */
+    public void clickRemoveItemButton(WebElement cartItem) {
+        click(getRemoveButtonElement(cartItem), () -> !cartItem.isDisplayed());
+    }
+
+    /**
+     * Clicks the inventory_item_name for a given cart_item WebElement
+     * and navigates to the associated InventoryItemPage
+     * @param cartItem WebElement
+     * @return InventoryItemPage
+     */
+    public InventoryItemPage clickInventoryItemName(WebElement cartItem) {
+        click(getInventoryItemNameElement(cartItem), () -> webDriver.getCurrentUrl().contains("inventory-item"));
+        return new InventoryItemPage(webDriver);
     }
 }

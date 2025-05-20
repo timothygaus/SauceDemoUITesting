@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class InventoryItemPage extends BasePage {
 
-    public InventoryItemPage(WebDriver webDriver, WebElement inventoryItem) {
+    public InventoryItemPage(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
     }
