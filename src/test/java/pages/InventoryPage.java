@@ -18,6 +18,9 @@ public class InventoryPage extends BasePage {
         PageFactory.initElements(webDriver, this);
     }
 
+    @FindBy(css = "div.app_logo")
+    WebElement appLogo;
+
     @FindBy(id = "react-burger-menu-btn")
     WebElement burgerMenuBtn;
 
@@ -26,9 +29,6 @@ public class InventoryPage extends BasePage {
 
     @FindBy(css = "a.shopping_cart_link")
     WebElement shoppingCartLink;
-
-    @FindBy(css = "div.app_logo")
-    WebElement appLogo;
 
     @FindBy(css = "span.title")
     WebElement secondaryHeaderTitle;
@@ -47,6 +47,11 @@ public class InventoryPage extends BasePage {
 
     @FindBy(css = "div.bm-menu-wrap")
     WebElement burgerMenuWrap;
+
+//    TODO: Selectors for:
+//    Cart Badge
+//    Sorting Dropdown
+//    Sorting Menu Elements
 
     private final String EXPECTED_APP_LOGO_TEXT = "Swag Labs";
     private final String EXPECTED_SECONDARY_HEADER_TITLE_TEXT = "Products";

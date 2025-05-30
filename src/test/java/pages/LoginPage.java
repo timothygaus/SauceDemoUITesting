@@ -13,6 +13,9 @@ public class LoginPage extends BasePage {
         PageFactory.initElements(webDriver, this);
     }
 
+    @FindBy(css = "div.login_logo")
+    WebElement loginLogo;
+
     @FindBy(id = "user-name")
     WebElement usernameInput;
 
@@ -22,14 +25,15 @@ public class LoginPage extends BasePage {
     @FindBy(id = "login-button")
     WebElement loginButton;
 
-    @FindBy(css = "div.login_logo")
-    WebElement loginLogo;
-
     @FindBy(css = "div.error-message-container.error")
     WebElement errorMessage;
 
     @FindBy(css = "[data-test='error-button']")
     WebElement errorButton;
+
+//    TODO: Selectors for:
+//    Username Error Icon
+//    Password Error Icon
 
     // Expected error messages for different failed login cases
     private final String INVALID_ERROR_LOGIN_TEXT = "Epic sadface: Username and password do not match any user in this service";

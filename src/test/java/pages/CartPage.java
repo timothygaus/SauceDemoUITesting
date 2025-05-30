@@ -18,11 +18,11 @@ public class CartPage extends BasePage {
         PageFactory.initElements(webDriver, this);
     }
 
-    @FindBy(id = "continue-shopping")
-    WebElement continueShoppingButton;
+    @FindBy(css = "div.app_logo")
+    WebElement appLogo;
 
-    @FindBy(id = "checkout")
-    WebElement checkoutButton;
+    @FindBy(id = "react-burger-menu-btn")
+    WebElement burgerMenuBtn;
 
     @FindBy(css = "div.shopping_cart_container")
     WebElement shoppingCartContainer;
@@ -30,26 +30,26 @@ public class CartPage extends BasePage {
     @FindBy(css = "a.shopping_cart_link")
     WebElement shoppingCartLink;
 
-    @FindBy(id = "react-burger-menu-btn")
-    WebElement burgerMenuBtn;
-
-    @FindBy(css = "div.cart_desc_label")
-    WebElement cartDescriptionLabel;
-
-    @FindBy(css = "div.cart_quantity_label")
-    WebElement cartQuantityLabel;
-
-    @FindBy(css = "div.app_logo")
-    WebElement appLogo;
-
-    @FindBy(css = "div.cart_item")
-    List<WebElement> cartItems;
-
     @FindBy(css = "span.shopping_cart_badge")
     WebElement shoppingCartBadge;
 
     @FindBy(css = "span.title")
     WebElement secondaryHeaderTitle;
+
+    @FindBy(css = "div.cart_quantity_label")
+    WebElement cartQuantityLabel;
+
+    @FindBy(css = "div.cart_desc_label")
+    WebElement cartDescriptionLabel;
+
+    @FindBy(css = "div.cart_item")
+    List<WebElement> cartItems;
+
+    @FindBy(id = "continue-shopping")
+    WebElement continueShoppingButton;
+
+    @FindBy(id = "checkout")
+    WebElement checkoutButton;
 
     public WebElement getContinueShoppingButton() {return continueShoppingButton;}
     public WebElement getCheckoutButton() {return checkoutButton;}

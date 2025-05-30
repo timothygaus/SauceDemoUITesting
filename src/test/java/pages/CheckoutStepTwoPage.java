@@ -16,11 +16,11 @@ public class CheckoutStepTwoPage extends BasePage {
         PageFactory.initElements(webDriver, this);
     }
 
-    @FindBy(id = "react-burger-menu-btn")
-    WebElement burgerMenuBtn;
-
     @FindBy(css = "div.app_logo")
     WebElement appLogo;
+
+    @FindBy(id = "react-burger-menu-btn")
+    WebElement burgerMenuBtn;
 
     @FindBy(css = "div.shopping_cart_container")
     WebElement shoppingCartContainer;
@@ -31,11 +31,11 @@ public class CheckoutStepTwoPage extends BasePage {
     @FindBy(css = "span.title")
     WebElement secondaryHeaderTitle;
 
-    @FindBy(css = "div.cart_desc_label")
-    WebElement cartDescriptionLabel;
-
     @FindBy(css = "div.cart_quantity_label")
     WebElement cartQuantityLabel;
+
+    @FindBy(css = "div.cart_desc_label")
+    WebElement cartDescriptionLabel;
 
     @FindBy(css = "div.cart_item")
     List<WebElement> cartItems;
@@ -66,6 +66,9 @@ public class CheckoutStepTwoPage extends BasePage {
 
     @FindBy(id = "finish")
     WebElement finishButton;
+
+//    TODO: Selectors for:
+//    Price Total Label
 
     public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
     public WebElement getAppLogo() {return appLogo;}

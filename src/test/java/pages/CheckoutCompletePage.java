@@ -13,11 +13,11 @@ public class CheckoutCompletePage extends BasePage {
         PageFactory.initElements(webDriver, this);
     }
 
-    @FindBy(id = "react-burger-menu-btn")
-    WebElement burgerMenuBtn;
-
     @FindBy(css = "div.app_logo")
     WebElement appLogo;
+
+    @FindBy(id = "react-burger-menu-btn")
+    WebElement burgerMenuBtn;
 
     @FindBy(css = "div.shopping_cart_container")
     WebElement shoppingCartContainer;
