@@ -18,8 +18,6 @@ public class CartPage extends BasePage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public WebElement getContinueShoppingButton() {return continueShoppingButton;}
-
     @FindBy(id = "continue-shopping")
     WebElement continueShoppingButton;
 
@@ -50,6 +48,10 @@ public class CartPage extends BasePage {
     @FindBy(css = "span.shopping_cart_badge")
     WebElement shoppingCartBadge;
 
+    @FindBy(css = "span.title")
+    WebElement secondaryHeaderTitle;
+
+    public WebElement getContinueShoppingButton() {return continueShoppingButton;}
     public WebElement getCheckoutButton() {return checkoutButton;}
     public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
     public WebElement getShoppingCartLink() {return shoppingCartLink;}
@@ -59,6 +61,7 @@ public class CartPage extends BasePage {
     public WebElement getAppLogo() {return appLogo;}
     public List<WebElement> getCartItems() {return cartItems;}
     public WebElement getShoppingCartBadge() {return shoppingCartBadge;}
+    public WebElement getSecondaryHeaderTitle() {return secondaryHeaderTitle;}
 
     /**
      * Gets the cart_item WebElement for a given item name
@@ -122,6 +125,15 @@ public class CartPage extends BasePage {
     public InventoryPage clickContinueShoppingButton() {
         click(getContinueShoppingButton(), () -> webDriver.getCurrentUrl().contains("inventory"));
         return new InventoryPage(webDriver);
+    }
+
+    /**
+     * Clicks the checkout button and navigates to the checkout step one page
+     * @return CheckoutStepOnePage
+     */
+    public CheckoutStepOnePage clickCheckoutButton() {
+        click(getCheckoutButton(), () -> webDriver.getCurrentUrl().contains("checkout-step-one"));
+        return new CheckoutStepOnePage(webDriver);
     }
 
     /**

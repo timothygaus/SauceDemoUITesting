@@ -25,6 +25,10 @@ public class BaseTest {
         webDriver.quit();
     }
 
+    /**
+     * Performs the steps needed to initialize a test up to the point of reaching the inventory page
+     * @return InventoryPage
+     */
     public InventoryPage initializeToInventoryPage() {
         webDriver.get(ConfigReader.getProperty("base.url"));
         LoginPage loginPage = new LoginPage(webDriver);

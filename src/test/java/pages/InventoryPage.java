@@ -63,6 +63,10 @@ public class InventoryPage extends BasePage {
     public String getExpectedAppLogoText() {return EXPECTED_APP_LOGO_TEXT;}
     public String getExpectedSecondaryHeaderTitleText() {return EXPECTED_SECONDARY_HEADER_TITLE_TEXT;}
 
+    /**
+     * Clicks the cart button and navigates to the cart page
+     * @return CartPage
+     */
     public CartPage clickCartButton() {
         click(shoppingCartLink, () -> webDriver.getCurrentUrl().contains("cart"));
         wait.until(ExpectedConditions.urlContains("cart"));
@@ -72,20 +76,39 @@ public class InventoryPage extends BasePage {
         return new CartPage(webDriver);
     }
 
+    /**
+     * Clicks on the name of a given item on the inventory page and navigates to the appropriate inventory item page for
+     * that item.
+     * @param itemName String name of the item
+     * @return InventoryItemPage
+     */
     public InventoryItemPage clickInventoryItem(String itemName) {
         WebElement inventoryItem = findInventoryItemByName(itemName);
         click(inventoryItem, () -> webDriver.getCurrentUrl().contains("inventory-item"));
         return new InventoryItemPage(webDriver);
     }
 
+    /**
+     * Clicks the burger menu button and opens the burger menu
+     */
     public void clickBurgerMenuButton() {
         click(burgerMenuBtn, () -> !isBurgerMenuHidden());
     }
 
+    /**
+     * Checks if a given item is present on the inventory page
+     * @param itemName String name of the item
+     * @return boolean, true if the item is present
+     */
     public boolean isItemPresent (String itemName) {
         return findInventoryItemByName(itemName) != null;
     }
 
+    /**
+     * Attempts to locate the given item name by looping through all inventory items currently on the inventory page.
+     * @param itemName String name of the item
+     * @return WebElement of the item of the matching name. Return null if it was not found.
+     */
     public WebElement findInventoryItemByName(String itemName) {
         try {
             for(WebElement item : inventoryItemNames) {
@@ -99,6 +122,10 @@ public class InventoryPage extends BasePage {
         return null;
     }
 
+    /**
+     * Checks if the burger menu is hidden
+     * @return boolean, returns true if the menu is hidden, returns false if the menu is visible
+     */
     public boolean isBurgerMenuHidden() {
         try {
             return wait.until(ExpectedConditions.domAttributeToBe(burgerMenuWrap, "hidden", "true"));

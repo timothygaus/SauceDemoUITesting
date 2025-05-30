@@ -84,6 +84,10 @@ public class LoginPage extends BasePage {
         return new InventoryPage(webDriver);
     }
 
+    /**
+     * Checks if the error message displayed after a failed login is visible
+     * @return true if the error web element is visible, false if it is not visible
+     */
     public boolean isLoginErrorMessageVisible() {
         try {
             wait.until(ExpectedConditions.visibilityOf(errorMessage));
