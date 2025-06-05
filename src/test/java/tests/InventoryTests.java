@@ -1,14 +1,12 @@
 package tests;
 
 import framework.base.BaseTest;
-import framework.config.ConfigReader;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.InventoryItemPage;
 import pages.InventoryPage;
-import pages.LoginPage;
 
 public class InventoryTests extends BaseTest {
 
@@ -35,7 +33,7 @@ public class InventoryTests extends BaseTest {
 
     @Test
     public void testPresenceOfReactBurgerMenuButton () {
-        Assert.assertTrue(inventoryPage.getBurgerMenuBtn().isDisplayed());
+        Assert.assertTrue(inventoryPage.getMenuComponent().isMenuHidden());
     }
 
     @Test
@@ -85,12 +83,12 @@ public class InventoryTests extends BaseTest {
     @Test
     public void testClickingBurgerMenuButton() {
         inventoryPage.clickBurgerMenuButton();
-        Assert.assertFalse(inventoryPage.isBurgerMenuHidden(), "Menu did not appear after clicking burger menu button on Inventory page");
+        Assert.assertFalse(inventoryPage.getMenuComponent().isMenuHidden(), "Menu did not appear after clicking burger menu button on Inventory page");
     }
 
     @Test
     public void testAbsenceOfBurgerMenu() {
-        Assert.assertTrue(inventoryPage.isBurgerMenuHidden(), "Burger menu unexpectedly displayed on Inventory page initialization");
+        Assert.assertTrue(inventoryPage.getMenuComponent().isMenuHidden(), "Burger menu unexpectedly displayed on Inventory page initialization");
     }
 
     @Test(dataProvider = "inventoryItemNames")

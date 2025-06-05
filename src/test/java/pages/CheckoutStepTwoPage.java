@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import pages.components.MenuComponent;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class CheckoutStepTwoPage extends BasePage {
 
     public CheckoutStepTwoPage (WebDriver webDriver) {
         super(webDriver);
+        this.menuComponent = new MenuComponent(webDriver);
         PageFactory.initElements(webDriver, this);
     }
 
@@ -67,6 +69,8 @@ public class CheckoutStepTwoPage extends BasePage {
     @FindBy(id = "finish")
     WebElement finishButton;
 
+    private final MenuComponent menuComponent;
+
 //    TODO: Selectors for:
 //    Price Total Label
 
@@ -87,6 +91,7 @@ public class CheckoutStepTwoPage extends BasePage {
     public WebElement getTotalLabel() {return totalLabel;}
     public WebElement getCancelButton() {return cancelButton;}
     public WebElement getFinishButton() {return finishButton;}
+    public MenuComponent getMenuComponent() {return menuComponent;}
 
     /**
      * Gets the cart_item WebElement for a given item name

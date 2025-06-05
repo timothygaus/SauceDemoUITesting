@@ -5,11 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import pages.components.MenuComponent;
 
 public class CheckoutStepOnePage extends BasePage {
 
     public CheckoutStepOnePage (WebDriver webDriver) {
         super(webDriver);
+        this.menuComponent = new MenuComponent(webDriver);
         PageFactory.initElements(webDriver, this);
     }
 
@@ -46,6 +48,8 @@ public class CheckoutStepOnePage extends BasePage {
     @FindBy(css = "div.error")
     WebElement errorMessage;
 
+    private MenuComponent menuComponent;
+
 //     TODO: Selectors for:
 //     - each of the (X) icons that show up next to each form field when there is an error
 //     - the x button on the error message
@@ -61,6 +65,7 @@ public class CheckoutStepOnePage extends BasePage {
     public WebElement getCancelButton() {return cancelButton;}
     public WebElement getContinueButton() {return continueButton;}
     public WebElement getErrorMessage() {return errorMessage;}
+    public MenuComponent getMenuComponent() {return menuComponent;}
 
     /**
      * Clicks the cancel button and navigates to the inventory page

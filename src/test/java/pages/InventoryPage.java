@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import pages.components.MenuComponent;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class InventoryPage extends BasePage {
 
     public InventoryPage(WebDriver webDriver) {
         super(webDriver);
+        this.menuComponent = new MenuComponent(webDriver);
         PageFactory.initElements(webDriver, this);
     }
 
@@ -42,12 +44,6 @@ public class InventoryPage extends BasePage {
     @FindBy(css = "div.inventory_item_name")
     List<WebElement> inventoryItemNames;
 
-    @FindBy(css = "div.bm-menu")
-    WebElement burgerMenu;
-
-    @FindBy(css = "div.bm-menu-wrap")
-    WebElement burgerMenuWrap;
-
 //    TODO: Selectors for:
 //    Cart Badge
 //    Sorting Dropdown
@@ -55,18 +51,17 @@ public class InventoryPage extends BasePage {
 
     private final String EXPECTED_APP_LOGO_TEXT = "Swag Labs";
     private final String EXPECTED_SECONDARY_HEADER_TITLE_TEXT = "Products";
+    private final MenuComponent menuComponent;
 
-    public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
     public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
     public WebElement getAppLogo() {return appLogo;}
     public WebElement getSecondaryHeaderTitle() {return secondaryHeaderTitle;}
     public WebElement getInventoryContainer() {return inventoryContainer;}
     public WebElement getInventoryList() {return inventoryList;}
     public List<WebElement> getInventoryItemNames() {return inventoryItemNames;}
-    public WebElement getBurgerMenu() {return burgerMenu;}
-    public WebElement getBurgerMenuWrap() {return burgerMenuWrap;}
     public String getExpectedAppLogoText() {return EXPECTED_APP_LOGO_TEXT;}
     public String getExpectedSecondaryHeaderTitleText() {return EXPECTED_SECONDARY_HEADER_TITLE_TEXT;}
+    public MenuComponent getMenuComponent() {return menuComponent;}
 
     /**
      * Clicks the cart button and navigates to the cart page
@@ -97,7 +92,7 @@ public class InventoryPage extends BasePage {
      * Clicks the burger menu button and opens the burger menu
      */
     public void clickBurgerMenuButton() {
-        click(burgerMenuBtn, () -> !isBurgerMenuHidden());
+        click(burgerMenuBtn, () -> !getMenuComponent().isMenuHidden());
     }
 
     /**
@@ -125,17 +120,5 @@ public class InventoryPage extends BasePage {
             e.printStackTrace();
         }
         return null;
-    }
-
-    /**
-     * Checks if the burger menu is hidden
-     * @return boolean, returns true if the menu is hidden, returns false if the menu is visible
-     */
-    public boolean isBurgerMenuHidden() {
-        try {
-            return wait.until(ExpectedConditions.domAttributeToBe(burgerMenuWrap, "hidden", "true"));
-        } catch (Exception e) {
-            return false;
-        }
     }
 }

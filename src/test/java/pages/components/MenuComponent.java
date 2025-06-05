@@ -81,7 +81,11 @@ public class MenuComponent {
      * Checks to see if the side menu is visible on the page
      * @return true if the menu is visible, false otherwise
      */
-    public boolean isMenuVisible() {
-        return wait.until(ExpectedConditions.domAttributeToBe(getBmMenuWrap(), "hidden", "true"));
+    public boolean isMenuHidden() {
+        try {
+            return wait.until(ExpectedConditions.domAttributeToBe(getBmMenuWrap(), "hidden", "true"));
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

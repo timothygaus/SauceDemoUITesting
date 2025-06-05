@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import pages.components.MenuComponent;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class CartPage extends BasePage {
 
     public CartPage (WebDriver webDriver) {
         super(webDriver);
+        this.menuComponent = new MenuComponent(webDriver);
         PageFactory.initElements(webDriver, this);
     }
 
@@ -51,6 +53,8 @@ public class CartPage extends BasePage {
     @FindBy(id = "checkout")
     WebElement checkoutButton;
 
+    private MenuComponent menuComponent;
+
     public WebElement getContinueShoppingButton() {return continueShoppingButton;}
     public WebElement getCheckoutButton() {return checkoutButton;}
     public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
@@ -62,6 +66,7 @@ public class CartPage extends BasePage {
     public List<WebElement> getCartItems() {return cartItems;}
     public WebElement getShoppingCartBadge() {return shoppingCartBadge;}
     public WebElement getSecondaryHeaderTitle() {return secondaryHeaderTitle;}
+    public MenuComponent getMenuComponent() {return menuComponent;}
 
     /**
      * Gets the cart_item WebElement for a given item name

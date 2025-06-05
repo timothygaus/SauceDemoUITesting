@@ -5,11 +5,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import pages.components.MenuComponent;
+
+import java.awt.*;
 
 public class CheckoutCompletePage extends BasePage {
 
     public CheckoutCompletePage(WebDriver webDriver) {
         super(webDriver);
+        this.menuComponent = new MenuComponent(webDriver);
         PageFactory.initElements(webDriver, this);
     }
 
@@ -40,6 +44,8 @@ public class CheckoutCompletePage extends BasePage {
     @FindBy(id = "back-to-products")
     WebElement backToProductsButton;
 
+    private MenuComponent menuComponent;
+
     public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
     public WebElement getAppLogo() {return appLogo;}
     public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
@@ -49,6 +55,7 @@ public class CheckoutCompletePage extends BasePage {
     public WebElement getCompleteHeader() {return completeHeader;}
     public WebElement getCompleteText() {return completeText;}
     public WebElement getBackToProductsButton() {return backToProductsButton;}
+    public MenuComponent getMenuComponent() {return menuComponent;}
 
     /**
      * Clicks the back home button and navigates to the inventory page
