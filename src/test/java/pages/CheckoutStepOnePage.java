@@ -48,11 +48,19 @@ public class CheckoutStepOnePage extends BasePage {
     @FindBy(css = "div.error")
     WebElement errorMessage;
 
-    private MenuComponent menuComponent;
+    @FindBy(css = "[data-test='error-button']")
+    WebElement errorMessageButton;
 
-//     TODO: Selectors for:
-//     - each of the (X) icons that show up next to each form field when there is an error
-//     - the x button on the error message
+    @FindBy(css = "#first-name + svg.error_icon")
+    WebElement firstNameErrorIcon;
+
+    @FindBy(css = "#last-name + svg.error_icon")
+    WebElement lastNameErrorIcon;
+
+    @FindBy(css = "#postal-code + svg.error_icon")
+    WebElement postalCodeErrorIcon;
+
+    private final MenuComponent menuComponent;
 
     public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
     public WebElement getAppLogo() {return appLogo;}
@@ -65,6 +73,10 @@ public class CheckoutStepOnePage extends BasePage {
     public WebElement getCancelButton() {return cancelButton;}
     public WebElement getContinueButton() {return continueButton;}
     public WebElement getErrorMessage() {return errorMessage;}
+    public WebElement getErrorMessageButton() {return errorMessageButton;}
+    public WebElement getFirstNameErrorIcon() {return firstNameErrorIcon;}
+    public WebElement getLastNameErrorIcon() {return lastNameErrorIcon;}
+    public WebElement getPostalCodeErrorIcon() {return postalCodeErrorIcon;}
     public MenuComponent getMenuComponent() {return menuComponent;}
 
     /**

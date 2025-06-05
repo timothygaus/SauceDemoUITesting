@@ -31,9 +31,11 @@ public class LoginPage extends BasePage {
     @FindBy(css = "[data-test='error-button']")
     WebElement errorButton;
 
-//    TODO: Selectors for:
-//    Username Error Icon
-//    Password Error Icon
+    @FindBy(css = "#user-name + svg.error_icon")
+    WebElement usernameErrorIcon;
+
+    @FindBy(css = "#password + svg.error_icon")
+    WebElement passwordErrorIcon;
 
     // Expected error messages for different failed login cases
     private final String INVALID_ERROR_LOGIN_TEXT = "Epic sadface: Username and password do not match any user in this service";
@@ -47,6 +49,8 @@ public class LoginPage extends BasePage {
     public WebElement getLoginLogo() {return loginLogo;}
     public WebElement getErrorMessage() {return errorMessage;}
     public WebElement getErrorButton() {return errorButton;}
+    public WebElement getUsernameErrorIcon() {return usernameErrorIcon;}
+    public WebElement getPasswordErrorIcon() {return passwordErrorIcon;}
 
     public String getInvalidLoginErrorText() {return INVALID_ERROR_LOGIN_TEXT;}
     public String getLockedOutUserLoginErrorText() {return LOCKED_OUT_USER_LOGIN_ERROR_TEXT;}

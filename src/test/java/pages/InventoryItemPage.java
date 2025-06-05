@@ -7,8 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import pages.components.MenuComponent;
 
-import java.awt.*;
-
 public class InventoryItemPage extends BasePage {
 
     public InventoryItemPage(WebDriver webDriver) {

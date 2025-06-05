@@ -54,6 +54,9 @@ public class CheckoutStepTwoPage extends BasePage {
     @FindBy(css = "div.summary_value_label[data-test=shipping-info-value]")
     WebElement shippingValueLabel;
 
+    @FindBy(css = "div.summary_info_label[data-test=total-info-label]")
+    WebElement totalInfoLabel;
+
     @FindBy(css = "div.summary_subtotal_label")
     WebElement subtotalLabel;
 
@@ -71,9 +74,6 @@ public class CheckoutStepTwoPage extends BasePage {
 
     private final MenuComponent menuComponent;
 
-//    TODO: Selectors for:
-//    Price Total Label
-
     public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
     public WebElement getAppLogo() {return appLogo;}
     public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
@@ -86,6 +86,7 @@ public class CheckoutStepTwoPage extends BasePage {
     public WebElement getPaymentValueLabel() {return paymentValueLabel;}
     public WebElement getShippingInfoLabel() {return shippingInfoLabel;}
     public WebElement getShippingValueLabel() {return shippingValueLabel;}
+    public WebElement getTotalInfoLabel() {return totalInfoLabel;}
     public WebElement getSubtotalLabel() {return subtotalLabel;}
     public WebElement getTaxLabel() {return taxLabel;}
     public WebElement getTotalLabel() {return totalLabel;}

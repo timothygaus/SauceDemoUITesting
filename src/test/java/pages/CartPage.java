@@ -53,7 +53,7 @@ public class CartPage extends BasePage {
     @FindBy(id = "checkout")
     WebElement checkoutButton;
 
-    private MenuComponent menuComponent;
+    private final MenuComponent menuComponent;
 
     public WebElement getContinueShoppingButton() {return continueShoppingButton;}
     public WebElement getCheckoutButton() {return checkoutButton;}

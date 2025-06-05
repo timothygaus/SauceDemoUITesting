@@ -1,18 +1,18 @@
 package pages;
 
 import framework.base.BasePage;
+import framework.utils.enums.SortingOption;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import pages.components.MenuComponent;
 
 import java.util.List;
 
 public class InventoryPage extends BasePage {
-
-    //private String inventoryPageUrl = "https://www.saucedemo.com/inventory.html";
 
     public InventoryPage(WebDriver webDriver) {
         super(webDriver);
@@ -32,8 +32,14 @@ public class InventoryPage extends BasePage {
     @FindBy(css = "a.shopping_cart_link")
     WebElement shoppingCartLink;
 
+    @FindBy(css = "span.shopping_cart_badge")
+    WebElement shoppingCartBadge;
+
     @FindBy(css = "span.title")
     WebElement secondaryHeaderTitle;
+
+    @FindBy(css = "select.product_sort_container")
+    WebElement productSortMenu;
 
     @FindBy(css = "div.inventory_container")
     WebElement inventoryContainer;
@@ -44,24 +50,28 @@ public class InventoryPage extends BasePage {
     @FindBy(css = "div.inventory_item_name")
     List<WebElement> inventoryItemNames;
 
-//    TODO: Selectors for:
-//    Cart Badge
-//    Sorting Dropdown
-//    Sorting Menu Elements
-
     private final String EXPECTED_APP_LOGO_TEXT = "Swag Labs";
     private final String EXPECTED_SECONDARY_HEADER_TITLE_TEXT = "Products";
     private final MenuComponent menuComponent;
 
-    public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
     public WebElement getAppLogo() {return appLogo;}
+    public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
+    public WebElement getShoppingCartBadge() {return shoppingCartBadge;}
     public WebElement getSecondaryHeaderTitle() {return secondaryHeaderTitle;}
+    public WebElement getProductSortMenu() {return productSortMenu;}
     public WebElement getInventoryContainer() {return inventoryContainer;}
     public WebElement getInventoryList() {return inventoryList;}
     public List<WebElement> getInventoryItemNames() {return inventoryItemNames;}
     public String getExpectedAppLogoText() {return EXPECTED_APP_LOGO_TEXT;}
     public String getExpectedSecondaryHeaderTitleText() {return EXPECTED_SECONDARY_HEADER_TITLE_TEXT;}
     public MenuComponent getMenuComponent() {return menuComponent;}
+
+    /**
+     * Clicks the burger menu button and opens the burger menu
+     */
+    public void clickBurgerMenuButton() {
+        click(burgerMenuBtn, () -> !getMenuComponent().isMenuHidden());
+    }
 
     /**
      * Clicks the cart button and navigates to the cart page
@@ -77,6 +87,15 @@ public class InventoryPage extends BasePage {
     }
 
     /**
+     * Selects the specified value from the sorting dropdown menu
+     * @param option SortingOption
+     */
+    public void selectSortingOption(SortingOption option) {
+        Select select = new Select(getProductSortMenu());
+        select.selectByValue(option.getValue());
+    }
+
+    /**
      * Clicks on the name of a given item on the inventory page and navigates to the appropriate inventory item page for
      * that item.
      * @param itemName String name of the item
@@ -86,13 +105,6 @@ public class InventoryPage extends BasePage {
         WebElement inventoryItem = findInventoryItemByName(itemName);
         click(inventoryItem, () -> webDriver.getCurrentUrl().contains("inventory-item"));
         return new InventoryItemPage(webDriver);
-    }
-
-    /**
-     * Clicks the burger menu button and opens the burger menu
-     */
-    public void clickBurgerMenuButton() {
-        click(burgerMenuBtn, () -> !getMenuComponent().isMenuHidden());
     }
 
     /**

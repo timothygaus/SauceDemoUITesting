@@ -7,8 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import pages.components.MenuComponent;
 
-import java.awt.*;
-
 public class CheckoutCompletePage extends BasePage {
 
     public CheckoutCompletePage(WebDriver webDriver) {
@@ -44,7 +42,7 @@ public class CheckoutCompletePage extends BasePage {
     @FindBy(id = "back-to-products")
     WebElement backToProductsButton;
 
-    private MenuComponent menuComponent;
+    private final MenuComponent menuComponent;
 
     public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
     public WebElement getAppLogo() {return appLogo;}
