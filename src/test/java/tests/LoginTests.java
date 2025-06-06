@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.InventoryPage;
 import pages.LoginPage;
 
@@ -18,6 +19,7 @@ public class LoginTests extends BaseTest {
     private static final Logger log = LoggerFactory.getLogger(LoginTests.class);
     //private static final Logger log = LoggerFactory.getLogger(LoginTests.class);
     private LoginPage loginPage;
+    SoftAssert softAssert = new SoftAssert();
 
     @BeforeMethod
     public void initializeLoginTest() {
@@ -37,6 +39,42 @@ public class LoginTests extends BaseTest {
         };
     }
 
+    @Test
+    public void testLoginLogo() {
+        Assert.assertTrue(loginPage.getLoginLogo().isDisplayed(), "Login logo was not displayed");
+        Assert.assertEquals(loginPage.getLoginLogoValue(), "Swag Labs", "Expected login logo to be " +
+                "Swag Labs, but got " + loginPage.getLoginLogoValue());
+    }
+
+    @Test
+    public void testLoginPageKeyElements() {
+        softAssert.assertTrue(loginPage.getUsernameInput().isDisplayed(), "Username input field was not displayed");
+        softAssert.assertEquals(loginPage.getUsernameFieldValue(), "", "Expected Username field to be empty, " +
+                "but got " + loginPage.getUsernameFieldValue());
+        softAssert.assertTrue(loginPage.getPasswordInput().isDisplayed(), "Password input field was not displayed");
+        softAssert.assertEquals(loginPage.getPasswordFieldValue(), "", "Expected password field to be empty, " +
+                "but got " + loginPage.getPasswordFieldValue());
+        softAssert.assertTrue(loginPage.getLoginButton().isDisplayed(), "Login button was not displayed");
+
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void testUsernameInputFieldFunctionality() {
+        String username = "standard_user";
+        loginPage.enterUsername(username);
+        Assert.assertEquals(loginPage.getUsernameFieldValue(), username, "Unable to enter " + username + " into" +
+                " the username input field");
+    }
+
+    @Test
+    public void testPasswordInputFieldFunctionality() {
+        String password = "secret_sauce";
+        loginPage.enterPassword(password);
+        Assert.assertEquals(loginPage.getPasswordFieldValue(), password, "Unable to enter " + password + " into " +
+                "the password input field");
+    }
+
     @Test(dataProvider = "validLoginData")
     public void testValidLoginWithLoginButton(String username, String password) {
         InventoryPage inventoryPage = loginPage.login(username, password);
@@ -54,10 +92,12 @@ public class LoginTests extends BaseTest {
         String username = "standard_user";
         String password = "incorrect_password";
         loginPage.login(username, password);
-        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for locked out user when login was attempted");
+        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for locked " +
+                "out user when login was attempted");
 
         String errorMessageActual = loginPage.getErrorMessageText();
-        Assert.assertEquals(errorMessageActual, loginPage.getInvalidLoginErrorText(), "Expected error message text to be " + loginPage.getInvalidLoginErrorText() + " but got " + errorMessageActual);
+        Assert.assertEquals(errorMessageActual, loginPage.getInvalidLoginErrorText(), "Expected error message " +
+                "text to be " + loginPage.getInvalidLoginErrorText() + " but got " + errorMessageActual);
     }
 
     @Test
@@ -65,11 +105,13 @@ public class LoginTests extends BaseTest {
         String username = "locked_out_user";
         String password = "secret_sauce";
         loginPage.login(username, password);
-        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for locked out user when login was attempted");
+        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for locked " +
+                "out user when login was attempted");
 
         String errorMessageActual = loginPage.getErrorMessageText();
         Assert.assertEquals(errorMessageActual, loginPage.getLockedOutUserLoginErrorText(),
-                "Expected error message after locked out user attempts login to say " + loginPage.getLockedOutUserLoginErrorText() + " but got " + errorMessageActual);
+                "Expected error message after locked out user attempts login to say " +
+                        loginPage.getLockedOutUserLoginErrorText() + " but got " + errorMessageActual);
     }
 
     @Test
@@ -77,10 +119,12 @@ public class LoginTests extends BaseTest {
         String username = "";
         String password = "secret_sauce";
         loginPage.login(username, password);
-        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for invalid user when login was attempted");
+        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for invalid " +
+                "user when login was attempted");
 
         String errorMessageActual = loginPage.getErrorMessageText();
-        Assert.assertEquals(errorMessageActual, loginPage.getMissingUsernameErrorText(), "Expected error message text to be " + loginPage.getMissingUsernameErrorText() + " but got " + errorMessageActual);
+        Assert.assertEquals(errorMessageActual, loginPage.getMissingUsernameErrorText(), "Expected error message " +
+                "text to be " + loginPage.getMissingUsernameErrorText() + " but got " + errorMessageActual);
     }
 
     @Test
@@ -88,59 +132,55 @@ public class LoginTests extends BaseTest {
         String username = "standard_user";
         String password = "";
         loginPage.login(username, password);
-        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for invalid user when login was attempted");
+        Assert.assertTrue(loginPage.isLoginErrorMessageVisible(), "Error message was not displayed for invalid " +
+                "user when login was attempted");
 
         String errorMessageActual = loginPage.getErrorMessageText();
-        Assert.assertEquals(errorMessageActual, loginPage.getMissingPasswordErrorText(), "Expected error message text to be " + loginPage.getMissingPasswordErrorText() + " but got " + errorMessageActual);
+        Assert.assertEquals(errorMessageActual, loginPage.getMissingPasswordErrorText(), "Expected error message " +
+                "text to be " + loginPage.getMissingPasswordErrorText() + " but got " + errorMessageActual);
+    }
+
+    @Test
+    public void testErrorMessageElementsHiddenOnInitialization() {
+        softAssert.assertFalse(loginPage.isLoginErrorMessageVisible(), "Error message was displayed on page " +
+                "initialization unexpectedly");
+        softAssert.assertFalse(loginPage.isUsernameErrorIconVisible(), "Username field error icon was " +
+                "displayed on page initialization unexpectedly");
+        softAssert.assertFalse(loginPage.isPasswordErrorIconVisible(), "Password field error icon was " +
+                "displayed on page initialization unexpectedly");
+
+        softAssert.assertAll();
     }
 
     @Test()
-    public void testErrorButton() {
+    public void testErrorUiElementsAppearOnFailedLogin() {
         String username = "standard_user";
         String password = "incorrect_password";
         loginPage.login(username, password);
-        loginPage.getErrorButton().click();
 
-        Assert.assertFalse(loginPage.isLoginErrorMessageVisible(), "Error message did not close after clicking the error button");
+        softAssert.assertTrue(loginPage.isLoginErrorMessageVisible(), "The error message was not displayed after a " +
+                "failed login attempt");
+        softAssert.assertTrue(loginPage.isUsernameErrorIconVisible(), "The error icon was not displayed " +
+                "next to the username input field after a failed login attempt");
+        softAssert.assertTrue(loginPage.isPasswordErrorIconVisible(), "The error icon was not displayed " +
+                "next to the password input field after a failed login attempt");
+
+        softAssert.assertAll();
     }
 
     @Test
-    public void testUsernameFieldVisibility() {
-        Assert.assertTrue(loginPage.getUsernameInput().isDisplayed(), "Username input field was not displayed");
+    public void testClosingErrorMessage() {
+        String username = "standard_user";
+        String password = "incorrect_password";
+        loginPage.login(username, password);
+        loginPage.clickErrorMessageButton();
+
+        softAssert.assertFalse(loginPage.isLoginErrorMessageVisible(), "Error message was still displayed after " +
+                "clicking the error message close button");
+        softAssert.assertFalse(loginPage.isUsernameErrorIconVisible(), "Error icon was still displayed " +
+                "next to the username input field after clicking the error message close button");
+        softAssert.assertFalse(loginPage.isPasswordErrorIconVisible(), "Error icon was still displayed " +
+                "next to the password input field after clicking the error message close button");
     }
 
-    @Test
-    public void testPasswordFieldVisibility() {
-        Assert.assertTrue(loginPage.getPasswordInput().isDisplayed(), "Password field was not displayed");
-    }
-
-    @Test
-    public void testLoginButtonVisibility() {
-        Assert.assertTrue(loginPage.getLoginButton().isDisplayed(), "Login button was not displayed");
-    }
-
-    @Test
-    public void testLoginLogoVisibility() {
-        Assert.assertTrue(loginPage.getLoginLogo().isDisplayed(), "Login logo was not displayed");
-    }
-
-    @Test
-    public void testErrorMessageHidden() {
-        Assert.assertFalse(loginPage.isLoginErrorMessageVisible(), "Error message was displayed on page initialization unexpectedly");
-    }
-
-    @Test
-    public void testUsernameInitialValue() {
-        Assert.assertEquals(loginPage.getUsernameFieldValue(), "", "Expected Username field to be empty, but got " + loginPage.getUsernameFieldValue());
-    }
-
-    @Test
-    public void testPasswordInitialValue() {
-        Assert.assertEquals(loginPage.getPasswordFieldValue(), "", "Expected Password field to be empty, but got " + loginPage.getPasswordFieldValue());
-    }
-
-    @Test
-    public void testLoginLogoValue() {
-        Assert.assertEquals(loginPage.getLoginLogoValue(), "Swag Labs", "Expected login logo to be Swag Labs, but got " + loginPage.getLoginLogoValue());
-    }
 }

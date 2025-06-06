@@ -58,8 +58,8 @@ public class LoginPage extends BasePage {
     public String getMissingUsernameErrorText() {return MISSING_USERNAME_ERROR_TEXT;}
     public String getMissingPasswordErrorText() {return MISSING_PASSWORD_ERROR_TEXT;}
 
-    public String getUsernameFieldValue() {return usernameInput.getText();}
-    public String getPasswordFieldValue() {return passwordInput.getText();}
+    public String getUsernameFieldValue() {return usernameInput.getAttribute("value");}
+    public String getPasswordFieldValue() {return passwordInput.getAttribute("value");}
     public String getLoginLogoValue() {return loginLogo.getText();}
     public String getErrorMessageText() {return errorMessage.getText();}
 
@@ -82,6 +82,22 @@ public class LoginPage extends BasePage {
     }
 
     /**
+     * Enters a string into the username input field
+     * @param username String
+     */
+    public void enterUsername(String username) {
+        type(getUsernameInput(), username);
+    }
+
+    /**
+     * Enters a string into the password input field
+     * @param password String
+     */
+    public void enterPassword(String password) {
+        type(getPasswordInput(), password);
+    }
+
+    /**
      * Enters values into the username and password fields and attempts to log in
      * Defaults useLoginButton to true
      *
@@ -99,13 +115,13 @@ public class LoginPage extends BasePage {
      * @param useLoginButton Boolean, set to true to use login button, set to false to use enter key
      */
     public InventoryPage login(String username, String password, boolean useLoginButton) {
-        type(usernameInput, username);
-        type(passwordInput, password);
+        enterUsername(username);
+        enterPassword(password);
 
         if (useLoginButton) {
-            click(loginButton, () -> webDriver.getCurrentUrl().contains("inventory"));
+            click(getLoginButton(), () -> webDriver.getCurrentUrl().contains("inventory"));
         } else {
-            passwordInput.sendKeys(Keys.ENTER);
+            getPasswordInput().sendKeys(Keys.ENTER);
         }
 
         return new InventoryPage(webDriver);
@@ -117,7 +133,33 @@ public class LoginPage extends BasePage {
      */
     public boolean isLoginErrorMessageVisible() {
         try {
-            wait.until(ExpectedConditions.visibilityOf(errorMessage));
+            wait.until(ExpectedConditions.visibilityOf(getErrorMessage()));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    public void clickErrorMessageButton() {
+        try {
+            click(getErrorButton(), () -> !isLoginErrorMessageVisible());
+        } catch (Exception ignored) {
+
+        }
+    }
+
+    public boolean isUsernameErrorIconVisible() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(getUsernameErrorIcon()));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    public boolean isPasswordErrorIconVisible() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(getPasswordErrorIcon()));
             return true;
         } catch (TimeoutException e) {
             return false;
