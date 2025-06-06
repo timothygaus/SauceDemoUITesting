@@ -1,10 +1,12 @@
 package pages;
 
 import framework.base.BasePage;
+import framework.utils.Urls;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.components.MenuComponent;
 
 public class CheckoutCompletePage extends BasePage {
@@ -54,6 +56,23 @@ public class CheckoutCompletePage extends BasePage {
     public WebElement getCompleteText() {return completeText;}
     public WebElement getBackToProductsButton() {return backToProductsButton;}
     public MenuComponent getMenuComponent() {return menuComponent;}
+
+    /**
+     * Checks that the checkout complete page is loaded by checking the URL and key WebElements are displayed.
+     * @return true if the URL contains CHECKOUT_COMPLETE_PAGE, the complete header is displayed, the pony express image
+     * is displayed, and the back to products button is displayed.
+     */
+    public boolean isPageLoaded() {
+        try {
+            wait.until(ExpectedConditions.urlContains(Urls.CHECKOUT_COMPLETE_PAGE));
+            wait.until(ExpectedConditions.visibilityOf(getCompleteHeader()));
+            wait.until(ExpectedConditions.visibilityOf(getPonyExpressImage()));
+            wait.until(ExpectedConditions.visibilityOf(getBackToProductsButton()));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     /**
      * Clicks the back home button and navigates to the inventory page

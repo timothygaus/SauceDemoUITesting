@@ -1,10 +1,13 @@
 package pages;
 
 import framework.base.BasePage;
+import framework.utils.Urls;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.components.MenuComponent;
 
 public class CheckoutStepOnePage extends BasePage {
@@ -78,6 +81,24 @@ public class CheckoutStepOnePage extends BasePage {
     public WebElement getLastNameErrorIcon() {return lastNameErrorIcon;}
     public WebElement getPostalCodeErrorIcon() {return postalCodeErrorIcon;}
     public MenuComponent getMenuComponent() {return menuComponent;}
+
+    /**
+     * Check that the checkout step one page is loaded by checking the URL and key WebElements are displayed.
+     * @return true if the URL contains CHECKOUT_STEP_ONE_PAGE, the first name field is displayed, the last name field
+     * is displayed, the postal code field is displayed, and the continue button is displayed.
+     */
+    public boolean isPageLoaded() {
+        try {
+            wait.until(ExpectedConditions.urlContains(Urls.CHECKOUT_STEP_ONE_PAGE));
+            wait.until(ExpectedConditions.visibilityOf(getFirstNameField()));
+            wait.until(ExpectedConditions.visibilityOf(getLastNameField()));
+            wait.until(ExpectedConditions.visibilityOf(getPostalCodeField()));
+            wait.until(ExpectedConditions.visibilityOf(getContinueButton()));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
 
     /**
      * Clicks the cancel button and navigates to the inventory page

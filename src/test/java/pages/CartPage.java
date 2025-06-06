@@ -1,6 +1,7 @@
 package pages;
 
 import framework.base.BasePage;
+import framework.utils.Urls;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -44,6 +45,9 @@ public class CartPage extends BasePage {
     @FindBy(css = "div.cart_desc_label")
     WebElement cartDescriptionLabel;
 
+    @FindBy(id = "cart_contents_container")
+    WebElement cartContentsContainer;
+
     @FindBy(css = "div.cart_item")
     List<WebElement> cartItems;
 
@@ -61,12 +65,30 @@ public class CartPage extends BasePage {
     public WebElement getShoppingCartLink() {return shoppingCartLink;}
     public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
     public WebElement getCartDescriptionLabel() {return cartDescriptionLabel;}
+    public WebElement getCartContentsContainer() {return cartContentsContainer;}
     public WebElement getCartQuantityLabel() {return cartQuantityLabel;}
     public WebElement getAppLogo() {return appLogo;}
     public List<WebElement> getCartItems() {return cartItems;}
     public WebElement getShoppingCartBadge() {return shoppingCartBadge;}
     public WebElement getSecondaryHeaderTitle() {return secondaryHeaderTitle;}
     public MenuComponent getMenuComponent() {return menuComponent;}
+
+    /**
+     * Checks that the cart page is loaded by checking the URL and key WebElements are displayed.
+     * @return true if the URL contains CART_PAGE, the cart contents container is displayed, the continue shopping
+     * button is displayed, and the checkout button is displayed.
+     */
+    public boolean isPageLoaded() {
+        try {
+            wait.until(ExpectedConditions.urlContains(Urls.CART_PAGE));
+            wait.until(ExpectedConditions.visibilityOf(getCartContentsContainer()));
+            wait.until(ExpectedConditions.visibilityOf(getContinueShoppingButton()));
+            wait.until(ExpectedConditions.visibilityOf(getCheckoutButton()));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
 
     /**
      * Gets the cart_item WebElement for a given item name

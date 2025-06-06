@@ -1,7 +1,9 @@
 package pages;
 
 import framework.base.BasePage;
+import framework.utils.Urls;
 import framework.utils.enums.SortingOption;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -65,6 +67,23 @@ public class InventoryPage extends BasePage {
     public String getExpectedAppLogoText() {return EXPECTED_APP_LOGO_TEXT;}
     public String getExpectedSecondaryHeaderTitleText() {return EXPECTED_SECONDARY_HEADER_TITLE_TEXT;}
     public MenuComponent getMenuComponent() {return menuComponent;}
+
+    /**
+     * Checks that the inventory page is loaded by checking the URL and key WebElements are displayed
+     * @return true if the URL contains INVENTORY_PAGE_URL, the inventory container is displayed, the shopping cart
+     * container is displayed, and the product sort menu is displayed.
+     */
+    public boolean isPageLoaded() {
+        try {
+            wait.until(ExpectedConditions.urlContains(Urls.INVENTORY_PAGE_URL));
+            wait.until(ExpectedConditions.visibilityOf(getInventoryContainer()));
+            wait.until(ExpectedConditions.visibilityOf(getShoppingCartContainer()));
+            wait.until(ExpectedConditions.visibilityOf(getProductSortMenu()));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
 
     /**
      * Clicks the burger menu button and opens the burger menu

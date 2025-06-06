@@ -1,11 +1,14 @@
 package pages;
 
 import framework.base.BasePage;
+import framework.utils.Urls;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.components.MenuComponent;
 
 import java.util.List;
@@ -32,6 +35,9 @@ public class CheckoutStepTwoPage extends BasePage {
 
     @FindBy(css = "span.title")
     WebElement secondaryHeaderTitle;
+
+    @FindBy(id = "checkout_summary_container")
+    WebElement checkoutSummaryContainer;
 
     @FindBy(css = "div.cart_quantity_label")
     WebElement cartQuantityLabel;
@@ -79,6 +85,7 @@ public class CheckoutStepTwoPage extends BasePage {
     public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
     public WebElement getShoppingCartBadge() {return shoppingCartBadge;}
     public WebElement getSecondaryHeaderTitle() {return secondaryHeaderTitle;}
+    public WebElement getCheckoutSummaryContainer() {return checkoutSummaryContainer;}
     public WebElement getCartDescriptionLabel() {return cartDescriptionLabel;}
     public WebElement getCartQuantityLabel() {return cartQuantityLabel;}
     public List<WebElement> getCartItems() {return cartItems;}
@@ -93,6 +100,23 @@ public class CheckoutStepTwoPage extends BasePage {
     public WebElement getCancelButton() {return cancelButton;}
     public WebElement getFinishButton() {return finishButton;}
     public MenuComponent getMenuComponent() {return menuComponent;}
+
+    /**
+     * Checks that the checkout step two page is loaded by checking the URL and key WebElements are displayed.
+     * @return true if the URL contains CHECKOUT_STEP_TWO_PAGE, the checkout summary container is displayed, the total
+     * label is displayed, and the finish button is displayed.
+     */
+    public boolean isPageLoaded() {
+        try {
+            wait.until(ExpectedConditions.urlContains(Urls.CHECKOUT_STEP_TWO_PAGE));
+            wait.until(ExpectedConditions.visibilityOf(getCheckoutSummaryContainer()));
+            wait.until(ExpectedConditions.visibilityOf(getTotalLabel()));
+            wait.until(ExpectedConditions.visibilityOf(getFinishButton()));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
 
     /**
      * Gets the cart_item WebElement for a given item name

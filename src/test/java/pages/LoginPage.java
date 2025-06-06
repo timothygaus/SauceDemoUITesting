@@ -1,6 +1,7 @@
 package pages;
 
 import framework.base.BasePage;
+import framework.utils.Urls;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -61,6 +62,24 @@ public class LoginPage extends BasePage {
     public String getPasswordFieldValue() {return passwordInput.getText();}
     public String getLoginLogoValue() {return loginLogo.getText();}
     public String getErrorMessageText() {return errorMessage.getText();}
+
+    /**
+     * Checks that the login page is loaded by checking the URL and key WebElements are displayed
+     * @return boolean true if the URL contains the LOGIN_PAGE_URL, the login logo is displayed, the username input is
+     * displayed, the password input is displayed, and the login button is displayed
+     */
+    public boolean isPageLoaded() {
+        try {
+            wait.until(ExpectedConditions.urlContains(Urls.LOGIN_PAGE_URL));
+            wait.until(ExpectedConditions.visibilityOf(getLoginLogo()));
+            wait.until(ExpectedConditions.visibilityOf(getUsernameInput()));
+            wait.until(ExpectedConditions.visibilityOf(getPasswordInput()));
+            wait.until(ExpectedConditions.visibilityOf(getLoginButton()));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
 
     /**
      * Enters values into the username and password fields and attempts to log in
