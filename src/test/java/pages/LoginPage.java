@@ -140,6 +140,9 @@ public class LoginPage extends BasePage {
         }
     }
 
+    /**
+     * Clicks the X icon on the error message to close it
+     */
     public void clickErrorMessageButton() {
         try {
             click(getErrorButton(), () -> !isLoginErrorMessageVisible());
@@ -148,6 +151,10 @@ public class LoginPage extends BasePage {
         }
     }
 
+    /**
+     * Checks if the error icon is visible next to the username input field
+     * @return true if visible
+     */
     public boolean isUsernameErrorIconVisible() {
         try {
             wait.until(ExpectedConditions.visibilityOf(getUsernameErrorIcon()));
@@ -157,6 +164,10 @@ public class LoginPage extends BasePage {
         }
     }
 
+    /**
+     * Checks if the error icon is visible next to the password input field
+     * @return true if visible
+     */
     public boolean isPasswordErrorIconVisible() {
         try {
             wait.until(ExpectedConditions.visibilityOf(getPasswordErrorIcon()));
