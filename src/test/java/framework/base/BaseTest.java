@@ -1,7 +1,7 @@
 package framework.base;
 
-import framework.config.ConfigReader;
 import framework.driver.DriverManager;
+import framework.utils.Urls;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -30,10 +30,12 @@ public class BaseTest {
      * @return InventoryPage
      */
     public InventoryPage initializeToInventoryPage() {
-        webDriver.get(ConfigReader.getProperty("base.url"));
+        webDriver.get(Urls.LOGIN_PAGE_URL);
         LoginPage loginPage = new LoginPage(webDriver);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Failed to load login page");
         InventoryPage inventoryPage = loginPage.login("standard_user", "secret_sauce");
         Assert.assertNotNull(loginPage, "Failed to navigate to Inventory page after logging in");
+        Assert.assertTrue(inventoryPage.isPageLoaded(), "Failed to load the Inventory page after logging in");
         return inventoryPage;
     }
 }

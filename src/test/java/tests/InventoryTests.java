@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import pages.CartPage;
 import pages.InventoryItemPage;
 import pages.InventoryPage;
 
@@ -65,8 +66,8 @@ public class InventoryTests extends BaseTest {
 
     @Test
     public void testClickCartButton() {
-        inventoryPage.clickCartButton();
-        Assert.assertTrue(webDriver.getCurrentUrl().contains("cart"), "Clicking cart button on Inventory page failed to navigate to Cart page.");
+        CartPage cartPage = inventoryPage.clickCartButton();
+        Assert.assertTrue(cartPage.isPageLoaded(), "Clicking cart button on Inventory page failed to navigate to Cart page.");
     }
 
     @Test(dataProvider = "inventoryItemNames")
@@ -94,7 +95,7 @@ public class InventoryTests extends BaseTest {
     @Test(dataProvider = "inventoryItemNames")
     public void testClickInventoryItemName(String itemName) {
         InventoryItemPage itemPage = inventoryPage.clickInventoryItem(itemName);
-        Assert.assertTrue(webDriver.getCurrentUrl().contains("inventory-item"), "Clicking name for " + itemName + " did not correctly navigate to the Inventory Item page for that item.");
+        Assert.assertTrue(itemPage.isPageLoaded(), "Clicking name for " + itemName + " did not correctly navigate to the Inventory Item page for that item.");
         Assert.assertEquals(itemPage.getInventoryDetailsName().getText(), itemName, "Clicking name for " + itemName + " did not correctly navigate to the Inventory Item page for that item. Instead, navigated to " + itemPage.getInventoryDetailsName().getText());
     }
 }

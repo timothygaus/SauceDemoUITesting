@@ -23,6 +23,7 @@ public class LoginTests extends BaseTest {
     public void initializeLoginTest() {
         webDriver.get(ConfigReader.getProperty("base.url"));
         loginPage = new LoginPage(webDriver);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Failed to load login page");
     }
 
     @DataProvider(name = "validLoginData")
