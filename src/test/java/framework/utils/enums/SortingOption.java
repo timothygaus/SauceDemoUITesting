@@ -1,10 +1,11 @@
 package framework.utils.enums;
 
 public enum SortingOption {
-    NAME_A_TO_Z("az"),
-    NAME_Z_TO_A("za"),
-    PRICE_LOW_TO_HIGH("lohi"),
-    PRICE_HIGH_TO_LOW("hilo");
+    // Values are the display text of each option
+    NAME_A_TO_Z("Name (A to Z)"),
+    NAME_Z_TO_A("Name (Z to A)"),
+    PRICE_LOW_TO_HIGH("Price (low to high)"),
+    PRICE_HIGH_TO_LOW("Price (high to low)");
 
     private final String value;
 

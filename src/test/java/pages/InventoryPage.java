@@ -3,6 +3,7 @@ package pages;
 import framework.base.BasePage;
 import framework.utils.Urls;
 import framework.utils.enums.SortingOption;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.ui.Select;
 import pages.components.MenuComponent;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InventoryPage extends BasePage {
 
@@ -49,6 +51,9 @@ public class InventoryPage extends BasePage {
     @FindBy(css = "div.inventory_list")
     WebElement inventoryList;
 
+    @FindBy(css = "div.inventory_item")
+    List<WebElement> inventoryItems;
+
     @FindBy(css = "div.inventory_item_name")
     List<WebElement> inventoryItemNames;
 
@@ -57,13 +62,16 @@ public class InventoryPage extends BasePage {
     private final MenuComponent menuComponent;
 
     public WebElement getAppLogo() {return appLogo;}
+    public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
     public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
     public WebElement getShoppingCartBadge() {return shoppingCartBadge;}
     public WebElement getSecondaryHeaderTitle() {return secondaryHeaderTitle;}
     public WebElement getProductSortMenu() {return productSortMenu;}
     public WebElement getInventoryContainer() {return inventoryContainer;}
     public WebElement getInventoryList() {return inventoryList;}
+    public List<WebElement> getInventoryItems() {return inventoryItems;}
     public List<WebElement> getInventoryItemNames() {return inventoryItemNames;}
+
     public String getExpectedAppLogoText() {return EXPECTED_APP_LOGO_TEXT;}
     public String getExpectedSecondaryHeaderTitleText() {return EXPECTED_SECONDARY_HEADER_TITLE_TEXT;}
     public MenuComponent getMenuComponent() {return menuComponent;}
@@ -111,7 +119,18 @@ public class InventoryPage extends BasePage {
      */
     public void selectSortingOption(SortingOption option) {
         Select select = new Select(getProductSortMenu());
-        select.selectByValue(option.getValue());
+        select.selectByVisibleText(option.getValue());
+    }
+
+    /**
+     * Gets the list of sorting options present in the sorting dropdown menu
+     * @return List of Strings of sorting options
+     */
+    public List<String> getSortingDropdownOptions() {
+        Select select = new Select(getProductSortMenu());
+        return select.getOptions().stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -122,7 +141,7 @@ public class InventoryPage extends BasePage {
      */
     public InventoryItemPage clickInventoryItem(String itemName) {
         WebElement inventoryItem = findInventoryItemByName(itemName);
-        click(inventoryItem, () -> webDriver.getCurrentUrl().contains("inventory-item"));
+        click(getInventoryItemNameElement(inventoryItem), () -> webDriver.getCurrentUrl().contains("inventory-item"));
         return new InventoryItemPage(webDriver);
     }
 
@@ -136,14 +155,88 @@ public class InventoryPage extends BasePage {
     }
 
     /**
+     * Gets the inventory_item_name WebElement for a given inventory_item WebElement
+     * @param inventoryItem inventory_item WebElement
+     * @return WebElement inventory_item_name
+     */
+    public WebElement getInventoryItemNameElement(WebElement inventoryItem) {
+        return inventoryItem.findElement(By.cssSelector("div.inventory_item_name"));
+    }
+
+    /**
+     * Gets the inventory_item_img WebElement for a given inventory_item WebElement
+     * @param inventoryItem inventory_item WebElement
+     * @return WebElement inventory_item_img
+     */
+    public WebElement getInventoryItemImageElement(WebElement inventoryItem) {
+        return inventoryItem.findElement(By.cssSelector("div.inventory_item_img"));
+    }
+
+    /**
+     * Gets the inventory_item_desc WebElement for a given inventory_item WebElement
+     * @param inventoryItem inventory_item WebElement
+     * @return WebElement inventory_item_desc
+     */
+    public WebElement getInventoryItemDescriptionElement(WebElement inventoryItem) {
+        return inventoryItem.findElement(By.cssSelector("div.inventory_item_desc"));
+    }
+
+    /**
+     * Gets the inventory_item_price WebElement for a given inventory_item WebElement
+     * @param inventoryItem inventory_item WebElement
+     * @return WebElement inventory_item_price
+     */
+    public WebElement getInventoryItemPriceElement(WebElement inventoryItem) {
+        return inventoryItem.findElement(By.cssSelector("div.inventory_item_price"));
+    }
+
+    /**
+     * Gets the add to cart button WebElement for a given inventory_item WebElement
+     * @param inventoryItem inventory_item WebElement
+     * @return WebElement Add to cart button
+     */
+    public WebElement getInventoryItemAddToCartButtonElement(WebElement inventoryItem) {
+        return inventoryItem.findElement(By.cssSelector("button.btn.btn_primary"));
+    }
+
+    /**
+     * Clicks the Add to cart button WebElement for a given inventory_item WebElement
+     * @param inventoryItem inventory_item WebElement
+     */
+    public void clickAddToCartButton(WebElement inventoryItem) {
+        click(getInventoryItemAddToCartButtonElement(inventoryItem),
+                () -> getInventoryItemRemoveButtonElement(inventoryItem).isDisplayed());
+    }
+
+    /**
+     * Clicks the Remove button WebElement for a given inventory_item WebElement
+     * @param inventoryItem inventory_item WebElement
+     */
+    public void clickRemoveButton(WebElement inventoryItem) {
+        click(getInventoryItemRemoveButtonElement(inventoryItem),
+                () -> getInventoryItemAddToCartButtonElement(inventoryItem).isDisplayed());
+    }
+
+    /**
+     * Gets the remove cart button WebElement for a given inventory_item WebElement
+     * @param inventoryItem inventory_item WebElement
+     * @return WebElement Remove button
+     */
+    public WebElement getInventoryItemRemoveButtonElement(WebElement inventoryItem) {
+        return inventoryItem.findElement(By.cssSelector("button.btn.btn_secondary"));
+    }
+
+    /**
      * Attempts to locate the given item name by looping through all inventory items currently on the inventory page.
      * @param itemName String name of the item
      * @return WebElement of the item of the matching name. Return null if it was not found.
      */
     public WebElement findInventoryItemByName(String itemName) {
         try {
-            for(WebElement item : inventoryItemNames) {
-                if (item.getText().equalsIgnoreCase(itemName)) {
+            for(WebElement item : getInventoryItems()) {
+                if (getInventoryItemNameElement(item).
+                        getText().
+                        equalsIgnoreCase(itemName)) {
                     return item;
                 }
             }
@@ -152,4 +245,24 @@ public class InventoryPage extends BasePage {
         }
         return null;
     }
+
+    /**
+     * Removes the '$' character from a string and returns it as a double
+     * @param priceString String to be parsed
+     * @return double converted from String with $ removed
+     */
+    public static double parsePrice(String priceString) {
+        return Double.parseDouble(priceString.replace("$", ""));
+    }
+
+    /**
+     * Gets the price of a given inventory_item WebElement
+     * @param inventoryItem inventory_item WebElement
+     * @return double inventory_item_price converted from String with '$' removed
+     */
+    public double getInventoryItemPriceAsDouble(WebElement inventoryItem) {
+        return parsePrice(getInventoryItemPriceElement(inventoryItem).getText());
+    }
+
+
 }
