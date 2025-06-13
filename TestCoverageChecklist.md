@@ -54,7 +54,7 @@ This document will be used to track the implementation of planned test cases for
 - [x] Verify that when the cart icon is clicked, the user is navigated to the cart page
 
 ### Product Details Navigation
-- [ ] Verify that each product card is populated with correct information: name, description, price
+- [x] Verify that each product card is populated with correct information: name, description, price, image
 - [x] Verify that clicking the product name navigates the user to the product details page for that product
 - [x] Verify that clicking the product image navigates the user to the product details page for that product
 

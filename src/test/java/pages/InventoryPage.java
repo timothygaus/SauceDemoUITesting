@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import pages.components.MenuComponent;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -193,7 +195,22 @@ public class InventoryPage extends BasePage {
      * @return WebElement inventory_item_img
      */
     public WebElement getInventoryItemImageElement(WebElement inventoryItem) {
-        return inventoryItem.findElement(By.cssSelector("div.inventory_item_img"));
+        return inventoryItem.findElement(By.cssSelector("img.inventory_item_img"));
+    }
+
+    /**
+     * Gets the src relative path of the inventory_item_img WebElement for a given inventory_item WebElement
+     * @param inventoryItem inventory_item WebElement
+     * @return String src relative path of inventory_item_img
+     */
+    public String getInventoryItemImageSrcPath(WebElement inventoryItem) {
+        try {
+            String imgUrl = getInventoryItemImageElement(inventoryItem).getAttribute("src");
+            URL url = new URL(imgUrl);
+            return url.getPath();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
