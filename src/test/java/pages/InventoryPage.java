@@ -114,6 +114,18 @@ public class InventoryPage extends BasePage {
     }
 
     /**
+     * Gets the integer value of the shopping cart badge. If the badge is not present, returns 0.
+     * @return int value of shopping cart badge, or 0 if not present
+     */
+    public int getShoppingCartBadgeValue() {
+        try {
+            return Integer.parseInt(getShoppingCartBadge().getText());
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    /**
      * Selects the specified value from the sorting dropdown menu
      * @param option SortingOption
      */

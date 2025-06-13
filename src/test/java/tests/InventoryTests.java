@@ -175,6 +175,40 @@ public class InventoryTests extends BaseTest {
     }
 
     @Test
+    public void testShoppingCartBadgeCountIncrements() {
+        WebElement inventoryItem = inventoryPage.getInventoryItems().get(0);
+        int initialBadgeCount = inventoryPage.getShoppingCartBadgeValue();
+
+        inventoryPage.clickAddToCartButton(inventoryItem);
+        int updatedBadgeCount = inventoryPage.getShoppingCartBadgeValue();
+
+        Assert.assertEquals(updatedBadgeCount, initialBadgeCount + 1, "Shopping cart badge count did not increment " +
+                "after adding an item to the cart");
+    }
+
+    @Test
+    public void testRemoveButtonReplacedWithAddToCartButton() {
+        WebElement inventoryItem = inventoryPage.getInventoryItems().get(0);
+        inventoryPage.clickAddToCartButton(inventoryItem);
+        inventoryPage.clickRemoveButton(inventoryItem);
+        Assert.assertTrue(inventoryPage.getInventoryItemAddToCartButtonElement(inventoryItem).isDisplayed(), "Remove " +
+                "button was not replaced by the Add to Cart button after click");
+    }
+
+    @Test
+    public void testShoppingCartBadgeCountDecrements() {
+        WebElement inventoryItem = inventoryPage.getInventoryItems().get(0);
+        inventoryPage.clickAddToCartButton(inventoryItem);
+        int badgeCountAfterAdd = inventoryPage.getShoppingCartBadgeValue();
+
+        inventoryPage.clickRemoveButton(inventoryItem);
+        int badgeCountAfterRemove = inventoryPage.getShoppingCartBadgeValue();
+
+        Assert.assertEquals(badgeCountAfterRemove, badgeCountAfterAdd - 1, "Shopping cart badge count did not " +
+                "decrement after removing an item from the cart");
+    }
+
+    @Test
     public void testClickCartButton() {
         CartPage cartPage = inventoryPage.clickCartButton();
         Assert.assertTrue(cartPage.isPageLoaded(), "Clicking cart button on Inventory page failed to navigate to Cart page.");
