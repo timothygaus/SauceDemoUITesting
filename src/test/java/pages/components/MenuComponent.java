@@ -78,8 +78,8 @@ public class MenuComponent {
     }
 
     /**
-     * Checks to see if the side menu is visible on the page
-     * @return true if the menu is visible, false otherwise
+     * Checks to see if the side menu is hidden on the page
+     * @return true if the menu is hidden, false otherwise
      */
     public boolean isMenuHidden() {
         try {

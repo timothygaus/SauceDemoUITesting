@@ -34,7 +34,7 @@ public class BaseTest {
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(), "Failed to load login page");
         InventoryPage inventoryPage = loginPage.login("standard_user", "secret_sauce");
-        Assert.assertNotNull(loginPage, "Failed to navigate to Inventory page after logging in");
+        Assert.assertNotNull(inventoryPage, "Failed to navigate to Inventory page after logging in");
         Assert.assertTrue(inventoryPage.isPageLoaded(), "Failed to load the Inventory page after logging in");
         return inventoryPage;
     }
