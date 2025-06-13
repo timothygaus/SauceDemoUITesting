@@ -245,4 +245,15 @@ public class InventoryTests extends BaseTest {
                 itemName + " did not correctly navigate to the Inventory Item page for that item. Instead, navigated to " +
                 itemPage.getInventoryDetailsName().getText());
     }
+
+    @Test(dataProvider = "inventoryItemNames")
+    public void testClickInventoryItemImage(String itemName) {
+        InventoryItemPage itemPage = inventoryPage.clickInventoryItemImage(itemName);
+        Assert.assertTrue(itemPage.isPageLoaded(), "Inventory Item page for " + itemName + " did not correctly " +
+                "load");
+        Assert.assertEquals(itemPage.getInventoryDetailsName().getText(), itemName, "Clicking image for "+
+                itemName + " did not correctly navigate to the Inventory Item page for that item. Instead, navigated to " +
+                itemPage.getInventoryDetailsName().getText());
+    }
+
 }

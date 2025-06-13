@@ -158,6 +158,18 @@ public class InventoryPage extends BasePage {
     }
 
     /**
+     * Clicks on the image of a given item on the inventory page and navigates to the appropriate inventory item page for
+     * that item.
+     * @param itemName String name of the item
+     * @return InventoryItemPage
+     */
+    public InventoryItemPage clickInventoryItemImage(String itemName) {
+        WebElement inventoryItem = findInventoryItemByName(itemName);
+        click(getInventoryItemImageElement(inventoryItem), () -> webDriver.getCurrentUrl().contains("inventory-item"));
+        return new InventoryItemPage(webDriver);
+    }
+
+    /**
      * Checks if a given item is present on the inventory page
      * @param itemName String name of the item
      * @return boolean, true if the item is present
@@ -212,6 +224,15 @@ public class InventoryPage extends BasePage {
     }
 
     /**
+     * Gets the remove cart button WebElement for a given inventory_item WebElement
+     * @param inventoryItem inventory_item WebElement
+     * @return WebElement Remove button
+     */
+    public WebElement getInventoryItemRemoveButtonElement(WebElement inventoryItem) {
+        return inventoryItem.findElement(By.cssSelector("button.btn.btn_secondary"));
+    }
+
+    /**
      * Clicks the Add to cart button WebElement for a given inventory_item WebElement
      * @param inventoryItem inventory_item WebElement
      */
@@ -227,15 +248,6 @@ public class InventoryPage extends BasePage {
     public void clickRemoveButton(WebElement inventoryItem) {
         click(getInventoryItemRemoveButtonElement(inventoryItem),
                 () -> getInventoryItemAddToCartButtonElement(inventoryItem).isDisplayed());
-    }
-
-    /**
-     * Gets the remove cart button WebElement for a given inventory_item WebElement
-     * @param inventoryItem inventory_item WebElement
-     * @return WebElement Remove button
-     */
-    public WebElement getInventoryItemRemoveButtonElement(WebElement inventoryItem) {
-        return inventoryItem.findElement(By.cssSelector("button.btn.btn_secondary"));
     }
 
     /**
