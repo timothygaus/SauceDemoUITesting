@@ -32,37 +32,38 @@ This document will be used to track the implementation of planned test cases for
 
 ## Inventory Page
 ### UI Element Presence
-- [ ] Verify that the menu button is present
-- [ ] Verify that the Swag Labs header is present ("Swag Labs")
-- [ ] Verify that the cart icon is present
-- [ ] Verify that the Products sub header is present ("Products")
-- [ ] Verify that the sorting dropdown menu is present
-- [ ] Verify that product cards are present with the following: Product image, product name, description, price, add to cart button
+- [x] Verify that the menu button is present
+- [x] Verify that the Swag Labs header is present ("Swag Labs")
+- [x] Verify that the cart icon is present
+- [x] Verify that the Products sub header is present ("Products")
+- [x] Verify that the sorting dropdown menu is present
+- [x] Verify that product cards are present with the following: Product image, product name, description, price, add to cart button
 
 ### Sorting Dropdown
-- [ ] Verify that all sorting options are present
-- [ ] Verify that when “Name (A to Z)” is selected that the product cards are sorted alphabetically
-- [ ] Verify that when “Name (Z to A)” is selected that the product cards are sorted reverse alphabetically
-- [ ] Verify that when “Price (low to high)” is selected that the product cards are sorted by ascending price
-- [ ] Verify that when “Price (high to low)” is selected that the product cards are sorted by descending price
+- [x] Verify that all sorting options are present
+- [x] Verify that when “Name (A to Z)” is selected that the product cards are sorted alphabetically
+- [x] Verify that when “Name (Z to A)” is selected that the product cards are sorted reverse alphabetically
+- [x] Verify that when “Price (low to high)” is selected that the product cards are sorted by ascending price
+- [x] Verify that when “Price (high to low)” is selected that the product cards are sorted by descending price
 
 ### Cart Functionality
-- [ ] Verify that after clicking the “Add to cart” button on a product card, the “Add to cart” button is replaced with the “Remove” button
-- [ ] Verify that after clicking the “Add to cart” button on a product card, the cart icon is updated
-- [ ] Verify that after clicking the “Remove” button on a product card, the “Remove” button is replaced with the “Add to cart” button
-- [ ] Verify that after clicking the “Remove” button on a product card, the cart icon is updated
-- [ ] Verify that when the cart icon is clicked, the user is navigated to the cart page, and all selected items are present
+- [x] Verify that after clicking the “Add to cart” button on a product card, the “Add to cart” button is replaced with the “Remove” button
+- [x] Verify that after clicking the “Add to cart” button on a product card, the cart icon is updated
+- [x] Verify that after clicking the “Remove” button on a product card, the “Remove” button is replaced with the “Add to cart” button
+- [x] Verify that after clicking the “Remove” button on a product card, the cart icon is updated
+- [x] Verify that when the cart icon is clicked, the user is navigated to the cart page
 
 ### Product Details Navigation
 - [ ] Verify that each product card is populated with correct information: name, description, price
-- [ ] Verify that clicking the product name navigates the user to the product details page for that product
-- [ ] Verify that clicking the product image navigates the user to the product details page for that product
+- [x] Verify that clicking the product name navigates the user to the product details page for that product
+- [x] Verify that clicking the product image navigates the user to the product details page for that product
 
 ### Menu Interaction
-- [ ] Verify that clicking the menu button opens the side bar menu
-- [ ] Verify that the following elements are present; All Items, About, Logout, Reset App State
-- [ ] Verify that after clicking the All Items option that the user remains on the Inventory page
-- [ ] Verify that clicking the Logout option navigates the user to the Login page
+- [x] Verify that clicking the menu button opens the sidebar menu
+- [x] Verify that the following elements are present; All Items, About, Logout, Reset App State, Close button
+- [x] Verify that after clicking the All Items option that the user remains on the Inventory page
+- [x] Verify that clicking the Logout option navigates the user to the Login page
+- [x] Verify that clicking the Close button closes the sidebar menu
 
 ## Product Details Page
 ### UI Element Presence

@@ -146,6 +146,13 @@ public class CartPage extends BasePage {
     }
 
     /**
+     * Clicks the burger menu button and opens the burger menu
+     */
+    public void clickBurgerMenuButton() {
+        click(burgerMenuBtn, () -> !getMenuComponent().isMenuHidden());
+    }
+
+    /**
      * Clicks the continue shopping button and navigates to the Inventory page
      * @return InventoryPage
      */
