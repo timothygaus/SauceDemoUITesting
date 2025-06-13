@@ -3,31 +3,31 @@ This document will be used to track the implementation of planned test cases for
 
 ## Login Page
 ### UI Element Presence
-- [ ] Verify that the Swag Labs header is present ("Swag Labs")
-- [ ] Verify that the Username field is present and empty
-- [ ] Verify that the Password field is present and empty
-- [ ] Verify that the Login button is present
+- [x] Verify that the Swag Labs header is present ("Swag Labs")
+- [x] Verify that the Username field is present and empty
+- [x] Verify that the Password field is present and empty
+- [x] Verify that the Login button is present
 
 ### Input Functionality
-- [ ] Verify that the user can enter text into the Username field
-- [ ] Verify that the user can enter text into the Password field
+- [x] Verify that the user can enter text into the Username field
+- [x] Verify that the user can enter text into the Password field
 
 ### Login Functionality - Valid Input
-- [ ] Verify login is successful with valid credentials
-- [ ] Verify login via mouse click on the login button
-- [ ] Verify login via pressing “Enter” key
+- [x] Verify login is successful with valid credentials
+- [x] Verify login via mouse click on the login button
+- [x] Verify login via pressing “Enter” key
 
 ### Login Functionality - Invalid Input
-- [ ] Verify login is blocked for invalid credentials
-- [ ] Verify the error message states the credentials do not match any user
-- [ ] Verify login is blocked for a locked out user
-- [ ] Verify the error message states the user is locked out
+- [x] Verify login is blocked for invalid credentials
+- [x] Verify the error message states the credentials do not match any user
+- [x] Verify login is blocked for a locked out user
+- [x] Verify the error message states the user is locked out
 
 ### Error Messaging & UI Feedback
-- [ ] Verify that the error message and error icons are not present on page load
-- [ ] Verify that an error message appears when login fails
-- [ ] Verify an error icon (“X”) appears next to the username and password fields when login fails
-- [ ] Verify that clicking the close button on the error message removes the error message and error icons next to input fields
+- [x] Verify that the error message and error icons are not present on page load
+- [x] Verify that an error message appears when login fails
+- [x] Verify an error icon (“X”) appears next to the username and password fields when login fails
+- [x] Verify that clicking the close button on the error message removes the error message and error icons next to input fields
 
 
 ## Inventory Page
