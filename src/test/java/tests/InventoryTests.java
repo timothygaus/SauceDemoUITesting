@@ -46,7 +46,7 @@ public class InventoryTests extends BaseTest {
     }
 
     @Test
-    public void testLoginPageHeaderElementsDisplayed() {
+    public void testInventoryPageHeaderElementsDisplayed() {
         softAssert.assertTrue(inventoryPage.getBurgerMenuBtn().isDisplayed(), "Menu button was not displayed");
         softAssert.assertTrue(inventoryPage.getAppLogo().isDisplayed(), "App logo was not displayed");
         softAssert.assertTrue(inventoryPage.getShoppingCartContainer().isDisplayed(), "Shopping cart button " +
