@@ -10,6 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.components.MenuComponent;
 
+import static framework.utils.WebElementUtils.click;
+
 public class CheckoutStepOnePage extends BasePage {
 
     public CheckoutStepOnePage (WebDriver webDriver) {
@@ -105,7 +107,7 @@ public class CheckoutStepOnePage extends BasePage {
      * @return InventoryPage
      */
     public InventoryPage clickCancelButton() {
-        click(getCancelButton(), () -> webDriver.getCurrentUrl().contains("inventory"));
+        click(webDriver, getCancelButton(), () -> new InventoryPage(webDriver).isPageLoaded());
         return new InventoryPage(webDriver);
     }
 
@@ -114,7 +116,7 @@ public class CheckoutStepOnePage extends BasePage {
      * @return CheckoutStepTwoPage
      */
     public CheckoutStepTwoPage clickContinueButton() {
-        click(getContinueButton(), () -> webDriver.getCurrentUrl().contains("checkout-step-two"));
+        click(webDriver, getContinueButton(), () -> new CheckoutStepTwoPage(webDriver).isPageLoaded());
         return new CheckoutStepTwoPage(webDriver);
     }
 }

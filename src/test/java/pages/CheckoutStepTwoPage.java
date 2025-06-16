@@ -13,6 +13,8 @@ import pages.components.MenuComponent;
 
 import java.util.List;
 
+import static framework.utils.WebElementUtils.click;
+
 public class CheckoutStepTwoPage extends BasePage {
 
     public CheckoutStepTwoPage (WebDriver webDriver) {
@@ -169,7 +171,7 @@ public class CheckoutStepTwoPage extends BasePage {
      * @return InventoryPage
      */
     public InventoryPage clickCancelButton() {
-        click(getCancelButton(), () -> webDriver.getCurrentUrl().contains("inventory"));
+        click(webDriver, getCancelButton(), () -> new InventoryPage(webDriver).isPageLoaded());
         return new InventoryPage(webDriver);
     }
 
@@ -178,7 +180,7 @@ public class CheckoutStepTwoPage extends BasePage {
      * @return CheckoutCompletePage
      */
     public CheckoutCompletePage clickFinishButton() {
-        click(getFinishButton(), () -> webDriver.getCurrentUrl().contains("checkout-complete"));
+        click(webDriver, getFinishButton(), () -> new CheckoutCompletePage(webDriver).isPageLoaded());
         return new CheckoutCompletePage(webDriver);
     }
 }

@@ -18,6 +18,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static framework.utils.WebElementUtils.click;
+
 public class InventoryPage extends BasePage {
 
     public InventoryPage(WebDriver webDriver) {
@@ -99,7 +101,7 @@ public class InventoryPage extends BasePage {
      * Clicks the burger menu button and opens the burger menu
      */
     public void clickBurgerMenuButton() {
-        click(burgerMenuBtn, () -> !getMenuComponent().isMenuHidden());
+        click(webDriver, burgerMenuBtn, () -> !getMenuComponent().isMenuHidden());
     }
 
     /**
@@ -107,11 +109,7 @@ public class InventoryPage extends BasePage {
      * @return CartPage
      */
     public CartPage clickCartButton() {
-        click(shoppingCartLink, () -> webDriver.getCurrentUrl().contains("cart"));
-        wait.until(ExpectedConditions.urlContains("cart"));
-        if (!webDriver.getCurrentUrl().contains("cart")) {
-            throw new IllegalStateException("Failed to navigate to the Cart page.");
-        }
+        click(webDriver, shoppingCartLink, () -> new CartPage(webDriver).isPageLoaded());
         return new CartPage(webDriver);
     }
 
@@ -155,7 +153,7 @@ public class InventoryPage extends BasePage {
      */
     public InventoryItemPage clickInventoryItem(String itemName) {
         WebElement inventoryItem = findInventoryItemByName(itemName);
-        click(getInventoryItemNameElement(inventoryItem), () -> webDriver.getCurrentUrl().contains("inventory-item"));
+        click(webDriver, getInventoryItemNameElement(inventoryItem), () -> new InventoryItemPage(webDriver).isPageLoaded());
         return new InventoryItemPage(webDriver);
     }
 
@@ -167,7 +165,7 @@ public class InventoryPage extends BasePage {
      */
     public InventoryItemPage clickInventoryItemImage(String itemName) {
         WebElement inventoryItem = findInventoryItemByName(itemName);
-        click(getInventoryItemImageElement(inventoryItem), () -> webDriver.getCurrentUrl().contains("inventory-item"));
+        click(webDriver, getInventoryItemImageElement(inventoryItem), () -> new InventoryItemPage(webDriver).isPageLoaded());
         return new InventoryItemPage(webDriver);
     }
 
@@ -254,7 +252,7 @@ public class InventoryPage extends BasePage {
      * @param inventoryItem inventory_item WebElement
      */
     public void clickAddToCartButton(WebElement inventoryItem) {
-        click(getInventoryItemAddToCartButtonElement(inventoryItem),
+        click(webDriver, getInventoryItemAddToCartButtonElement(inventoryItem),
                 () -> getInventoryItemRemoveButtonElement(inventoryItem).isDisplayed());
     }
 
@@ -263,7 +261,7 @@ public class InventoryPage extends BasePage {
      * @param inventoryItem inventory_item WebElement
      */
     public void clickRemoveButton(WebElement inventoryItem) {
-        click(getInventoryItemRemoveButtonElement(inventoryItem),
+        click(webDriver, getInventoryItemRemoveButtonElement(inventoryItem),
                 () -> getInventoryItemAddToCartButtonElement(inventoryItem).isDisplayed());
     }
 

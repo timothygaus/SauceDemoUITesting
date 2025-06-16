@@ -7,6 +7,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import static framework.utils.WebElementUtils.click;
+import static framework.utils.WebElementUtils.type;
+
 public class LoginPage extends BasePage {
 
     public LoginPage(WebDriver webDriver) {
@@ -86,7 +89,7 @@ public class LoginPage extends BasePage {
      * @param username String
      */
     public void enterUsername(String username) {
-        type(getUsernameInput(), username);
+        type(webDriver, getUsernameInput(), username);
     }
 
     /**
@@ -94,7 +97,7 @@ public class LoginPage extends BasePage {
      * @param password String
      */
     public void enterPassword(String password) {
-        type(getPasswordInput(), password);
+        type(webDriver, getPasswordInput(), password);
     }
 
     /**
@@ -119,7 +122,7 @@ public class LoginPage extends BasePage {
         enterPassword(password);
 
         if (useLoginButton) {
-            click(getLoginButton(), () -> webDriver.getCurrentUrl().contains("inventory"));
+            click(webDriver, getLoginButton(), () -> new InventoryPage(webDriver).isPageLoaded());
         } else {
             getPasswordInput().sendKeys(Keys.ENTER);
         }
@@ -145,7 +148,7 @@ public class LoginPage extends BasePage {
      */
     public void clickErrorMessageButton() {
         try {
-            click(getErrorButton(), () -> !isLoginErrorMessageVisible());
+            click(webDriver, getErrorButton(), () -> !isLoginErrorMessageVisible());
         } catch (Exception ignored) {
 
         }

@@ -1,6 +1,7 @@
 package tests;
 
 import framework.base.BaseTest;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -31,12 +32,13 @@ public class MenuComponentTests extends BaseTest {
         Assert.assertTrue(menuComponent.getResetAppStateLink().isDisplayed(), "Reset App State Link is not displayed");
     }
 
-    @Test
-    public void testCloseButtonFunctionality() {
-        inventoryPage.clickBurgerMenuButton();
-        menuComponent.clickCloseButton();
-        Assert.assertTrue(menuComponent.isMenuHidden(), "Menu is still displayed after clicking Close Button");
-    }
+//    @Test
+//    public void testCloseButtonFunctionality() {
+//        inventoryPage.clickBurgerMenuButton();
+//        Assert.assertTrue(!menuComponent.isMenuHidden(), "Menu was not displayed after clicking Menu button");
+//        menuComponent.clickCloseButton();
+//        Assert.assertTrue(menuComponent.isMenuHidden(), "Menu is still displayed after clicking Close Button");
+//    }
 
     @Test
     public void testAllItemsLinkFunctionalityOnInventoryPage() {

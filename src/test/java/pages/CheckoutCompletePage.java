@@ -9,6 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.components.MenuComponent;
 
+import static framework.utils.WebElementUtils.click;
+
 public class CheckoutCompletePage extends BasePage {
 
     public CheckoutCompletePage(WebDriver webDriver) {
@@ -79,7 +81,7 @@ public class CheckoutCompletePage extends BasePage {
      * @return InventoryPage
      */
     public InventoryPage clickBackHomeButton() {
-        click(getBackToProductsButton(), () -> webDriver.getCurrentUrl().contains("inventory"));
+        click(webDriver, getBackToProductsButton(), () -> new InventoryPage(webDriver).isPageLoaded());
         return new InventoryPage(webDriver);
     }
 }

@@ -12,6 +12,8 @@ import pages.LoginPage;
 
 import java.time.Duration;
 
+import static framework.utils.WebElementUtils.click;
+
 public class MenuComponent {
 
     protected WebDriver webDriver;
@@ -56,7 +58,7 @@ public class MenuComponent {
     public WebElement getResetAppStateLink() {return resetAppStateLink;}
 
     public void clickCloseButton() {
-        getCloseButton().click();
+        click(webDriver, getCloseButton(), this::isMenuHidden);
     }
 
     /**
@@ -64,7 +66,7 @@ public class MenuComponent {
      * @return InventoryPage
      */
     public InventoryPage clickAllItems() {
-        getAllItemsLink().click();
+        click(webDriver, getAllItemsLink(), () -> new InventoryPage(webDriver).isPageLoaded());
         return new InventoryPage(webDriver);
     }
 
@@ -73,7 +75,7 @@ public class MenuComponent {
      * @return LoginPage
      */
     public LoginPage clickLogout() {
-        getLogoutLink().click();
+        click(webDriver, getLogoutLink(), () -> new LoginPage(webDriver).isPageLoaded());
         return new LoginPage(webDriver);
     }
 

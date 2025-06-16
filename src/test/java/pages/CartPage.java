@@ -13,6 +13,8 @@ import pages.components.MenuComponent;
 
 import java.util.List;
 
+import static framework.utils.WebElementUtils.click;
+
 public class CartPage extends BasePage {
 
     public CartPage (WebDriver webDriver) {
@@ -149,7 +151,7 @@ public class CartPage extends BasePage {
      * Clicks the burger menu button and opens the burger menu
      */
     public void clickBurgerMenuButton() {
-        click(burgerMenuBtn, () -> !getMenuComponent().isMenuHidden());
+        click(webDriver, burgerMenuBtn, () -> !getMenuComponent().isMenuHidden());
     }
 
     /**
@@ -157,7 +159,7 @@ public class CartPage extends BasePage {
      * @return InventoryPage
      */
     public InventoryPage clickContinueShoppingButton() {
-        click(getContinueShoppingButton(), () -> webDriver.getCurrentUrl().contains("inventory"));
+        click(webDriver, getContinueShoppingButton(), () -> new InventoryPage(webDriver).isPageLoaded());
         return new InventoryPage(webDriver);
     }
 
@@ -166,7 +168,7 @@ public class CartPage extends BasePage {
      * @return CheckoutStepOnePage
      */
     public CheckoutStepOnePage clickCheckoutButton() {
-        click(getCheckoutButton(), () -> webDriver.getCurrentUrl().contains("checkout-step-one"));
+        click(webDriver, getCheckoutButton(), () -> new CheckoutStepOnePage(webDriver).isPageLoaded());
         return new CheckoutStepOnePage(webDriver);
     }
 
@@ -175,7 +177,7 @@ public class CartPage extends BasePage {
      * @param cartItem cart_item WebElement
      */
     public void clickRemoveItemButton(WebElement cartItem) {
-        click(getRemoveButtonElement(cartItem), () -> !cartItem.isDisplayed());
+        click(webDriver, getRemoveButtonElement(cartItem), () -> !cartItem.isDisplayed());
     }
 
     /**
@@ -185,7 +187,7 @@ public class CartPage extends BasePage {
      * @return InventoryItemPage
      */
     public InventoryItemPage clickInventoryItemName(WebElement cartItem) {
-        click(getInventoryItemNameElement(cartItem), () -> webDriver.getCurrentUrl().contains("inventory-item"));
+        click(webDriver, getInventoryItemNameElement(cartItem), () -> new InventoryItemPage(webDriver).isPageLoaded());
         return new InventoryItemPage(webDriver);
     }
 }
