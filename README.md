@@ -35,6 +35,8 @@ cd SauceDemoUITesting
 Test reports will be generated in the `build/reports/tests/test` directory.
 
 ### Running Tests via GitHub Actions
+[![CI/CD Pipeline](https://github.com/timothygaus/SauceDemoUITesting/actions/workflows/ci.yml/badge.svg)](https://github.com/timothygaus/SauceDemoUITesting/actions/workflows/ci.yml)
+
 The CI/CD pipeline automatically triggers on every push or pull request. Check [here](https://github.com/timothygaus/SauceDemoUITesting/actions) for the latest results.
 
 ## Future Enhancements
