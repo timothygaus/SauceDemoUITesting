@@ -18,6 +18,6 @@ dependencies {
 
 tasks.test {
     useTestNG {
-        suites("src/test/resources/testing.xml")
+        suites("src/test/resources/testng.xml")
     }
 }
