@@ -11,18 +11,23 @@ import pages.LoginPage;
 
 public class BaseTest {
 
-    protected WebDriver webDriver;
+    private static final ThreadLocal<WebDriver> webDriver = new ThreadLocal<>();
+
+    protected WebDriver getWebdriver() {
+        return webDriver.get();
+    }
 
     @BeforeMethod
     public void setUp() {
         System.out.println("Setting up the test environment...");
-        webDriver = new DriverManager().getDriver();
+        webDriver.set(new DriverManager().getDriver());
     }
 
     @AfterMethod
     public void tearDown() {
         System.out.println("Tearing down the test environment...");
-        webDriver.quit();
+        getWebdriver().quit();
+        webDriver.remove();
     }
 
     /**
@@ -30,8 +35,8 @@ public class BaseTest {
      * @return InventoryPage
      */
     public InventoryPage initializeToInventoryPage() {
-        webDriver.get(Urls.LOGIN_PAGE_URL);
-        LoginPage loginPage = new LoginPage(webDriver);
+        getWebdriver().get(Urls.LOGIN_PAGE_URL);
+        LoginPage loginPage = new LoginPage(getWebdriver());
         Assert.assertTrue(loginPage.isPageLoaded(), "Failed to load login page");
         InventoryPage inventoryPage = loginPage.login("standard_user", "secret_sauce");
         Assert.assertNotNull(inventoryPage, "Failed to navigate to Inventory page after logging in");

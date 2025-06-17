@@ -7,11 +7,11 @@ import pages.InventoryPage;
 
 public class CheckoutStepOneTests extends BaseTest {
 
-    private CheckoutStepOnePage checkoutStepOnePage;
-    private InventoryPage inventoryPage;
+    private static final ThreadLocal<CheckoutStepOnePage> checkoutStepOnePage = new ThreadLocal<>();
+    private static final ThreadLocal<InventoryPage> inventoryPage = new ThreadLocal<>();
 
     @BeforeMethod
     public void initializeCheckoutStepOneTest() {
-        inventoryPage = initializeToInventoryPage();
+        inventoryPage.set(initializeToInventoryPage());
     }
 }

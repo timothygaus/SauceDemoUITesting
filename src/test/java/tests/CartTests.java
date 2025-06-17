@@ -9,17 +9,17 @@ import pages.InventoryPage;
 
 public class CartTests extends BaseTest {
 
-    private InventoryPage inventoryPage;
-    private CartPage cartPage;
+    private static final ThreadLocal<InventoryPage> inventoryPage = new ThreadLocal<>();
+    private static final ThreadLocal<CartPage> cartPage = new ThreadLocal<>();
 
     @BeforeMethod
     public void initializeCartTest() {
-        inventoryPage = initializeToInventoryPage();
+        inventoryPage.set(initializeToInventoryPage());
     }
 
     @Test
     public void testContinueShoppingButton() {
-        CartPage cartPage = inventoryPage.clickCartButton();
+        CartPage cartPage = inventoryPage.get().clickCartButton();
         InventoryPage inventoryPage = cartPage.clickContinueShoppingButton();
         Assert.assertTrue(inventoryPage.isPageLoaded(), "Failed to navigate to Inventory Page after clicking Continue Shopping button on Cart page.");
     }

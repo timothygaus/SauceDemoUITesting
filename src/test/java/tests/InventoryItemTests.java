@@ -7,11 +7,11 @@ import pages.InventoryPage;
 
 public class InventoryItemTests extends BaseTest {
 
-    private InventoryItemPage inventoryItemPage;
-    private InventoryPage inventoryPage;
+    private static final ThreadLocal<InventoryItemPage> inventoryItemPage = new ThreadLocal<>();
+    private static final ThreadLocal<InventoryPage> inventoryPage = new ThreadLocal<>();
 
     @BeforeMethod
     public void initializeInventoryItemTest() {
-        inventoryPage = initializeToInventoryPage();
+        inventoryPage.set(initializeToInventoryPage());
     }
 }

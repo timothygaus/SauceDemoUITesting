@@ -22,12 +22,13 @@ import java.util.stream.Collectors;
 
 public class InventoryTests extends BaseTest {
 
-    private InventoryPage inventoryPage;
-    SoftAssert softAssert = new SoftAssert();
+    private static final ThreadLocal<InventoryPage> inventoryPage = new ThreadLocal<>();
+    private static final ThreadLocal<SoftAssert> softAssert = new ThreadLocal<>();
 
     @BeforeMethod
     public void initializeInventoryTest() {
-        inventoryPage = initializeToInventoryPage();
+        inventoryPage.set(initializeToInventoryPage());
+        softAssert.set(new SoftAssert());
     }
 
     @DataProvider(name = "inventoryItems")
@@ -47,58 +48,58 @@ public class InventoryTests extends BaseTest {
 
     @Test
     public void testInventoryPageHeaderElementsDisplayed() {
-        softAssert.assertTrue(inventoryPage.getBurgerMenuBtn().isDisplayed(), "Menu button was not displayed");
-        softAssert.assertTrue(inventoryPage.getAppLogo().isDisplayed(), "App logo was not displayed");
-        softAssert.assertTrue(inventoryPage.getShoppingCartContainer().isDisplayed(), "Shopping cart button " +
+        softAssert.get().assertTrue(inventoryPage.get().getBurgerMenuBtn().isDisplayed(), "Menu button was not displayed");
+        softAssert.get().assertTrue(inventoryPage.get().getAppLogo().isDisplayed(), "App logo was not displayed");
+        softAssert.get().assertTrue(inventoryPage.get().getShoppingCartContainer().isDisplayed(), "Shopping cart button " +
                 "was not displayed");
-        softAssert.assertTrue(inventoryPage.getSecondaryHeaderTitle().isDisplayed(), "Secondary header was not" +
+        softAssert.get().assertTrue(inventoryPage.get().getSecondaryHeaderTitle().isDisplayed(), "Secondary header was not" +
                 "displayed");
-        softAssert.assertTrue(inventoryPage.getProductSortMenu().isDisplayed(), "Sorting dropdown menu was not " +
+        softAssert.get().assertTrue(inventoryPage.get().getProductSortMenu().isDisplayed(), "Sorting dropdown menu was not " +
                 "displayed");
 
-        softAssert.assertAll();
+        softAssert.get().assertAll();
     }
 
     @Test
     public void testAppLogoText() {
-        Assert.assertTrue(inventoryPage.getAppLogo().isDisplayed(), "App logo was not displayed");
-        String appLogoText = inventoryPage.getAppLogo().getText();
-        Assert.assertEquals(appLogoText, inventoryPage.getExpectedAppLogoText(), "App logo text was not correct");
+        Assert.assertTrue(inventoryPage.get().getAppLogo().isDisplayed(), "App logo was not displayed");
+        String appLogoText = inventoryPage.get().getAppLogo().getText();
+        Assert.assertEquals(appLogoText, inventoryPage.get().getExpectedAppLogoText(), "App logo text was not correct");
     }
 
     @Test
     public void testProductsSubHeaderText() {
-        Assert.assertTrue(inventoryPage.getSecondaryHeaderTitle().isDisplayed(), "Secondary header was not " +
+        Assert.assertTrue(inventoryPage.get().getSecondaryHeaderTitle().isDisplayed(), "Secondary header was not " +
                 "displayed");
-        String secondaryHeaderText = inventoryPage.getSecondaryHeaderTitle().getText();
-        Assert.assertEquals(secondaryHeaderText, inventoryPage.getExpectedSecondaryHeaderTitleText(), "Secondary " +
+        String secondaryHeaderText = inventoryPage.get().getSecondaryHeaderTitle().getText();
+        Assert.assertEquals(secondaryHeaderText, inventoryPage.get().getExpectedSecondaryHeaderTitleText(), "Secondary " +
                 "header text was not correct");
     }
 
     @Test
     public void testPresenceOfInventoryContainer() {
-        Assert.assertTrue(inventoryPage.getInventoryContainer().isDisplayed(), "Inventory container was not " +
+        Assert.assertTrue(inventoryPage.get().getInventoryContainer().isDisplayed(), "Inventory container was not " +
                 "displayed");
     }
 
     @Test
     public void testProductCardUiElements() {
-        Assert.assertFalse(inventoryPage.getInventoryItems().isEmpty(), "No items were present in the " +
+        Assert.assertFalse(inventoryPage.get().getInventoryItems().isEmpty(), "No items were present in the " +
                 "inventory list");
-        WebElement productCard = inventoryPage.getInventoryItems().get(0);
+        WebElement productCard = inventoryPage.get().getInventoryItems().get(0);
 
-        softAssert.assertTrue(inventoryPage.getInventoryItemNameElement(productCard).isDisplayed(), "Product name " +
+        softAssert.get().assertTrue(inventoryPage.get().getInventoryItemNameElement(productCard).isDisplayed(), "Product name " +
                 "was not displayed for the first item in the inventory container");
-        softAssert.assertTrue(inventoryPage.getInventoryItemImageElement(productCard).isDisplayed(), "Product image " +
+        softAssert.get().assertTrue(inventoryPage.get().getInventoryItemImageElement(productCard).isDisplayed(), "Product image " +
                 "was not displayed for the first item in the inventory container");
-        softAssert.assertTrue(inventoryPage.getInventoryItemDescriptionElement(productCard).isDisplayed(), "Product " +
+        softAssert.get().assertTrue(inventoryPage.get().getInventoryItemDescriptionElement(productCard).isDisplayed(), "Product " +
                 "description was not displayed for the first item in the inventory container");
-        softAssert.assertTrue(inventoryPage.getInventoryItemPriceElement(productCard).isDisplayed(), "Product price " +
+        softAssert.get().assertTrue(inventoryPage.get().getInventoryItemPriceElement(productCard).isDisplayed(), "Product price " +
                 "was not displayed for the first item in the inventory container");
-        softAssert.assertTrue(inventoryPage.getInventoryItemAddToCartButtonElement(productCard).isDisplayed(), "Product " +
+        softAssert.get().assertTrue(inventoryPage.get().getInventoryItemAddToCartButtonElement(productCard).isDisplayed(), "Product " +
                 "add to cart button was not displayed for the first item in the inventory container");
 
-        softAssert.assertAll();
+        softAssert.get().assertAll();
     }
 
     @Test
@@ -106,15 +107,15 @@ public class InventoryTests extends BaseTest {
         List<String> expectedSortingOptions = Arrays.stream(SortingOption.values())
                 .map(SortingOption::getValue)
                 .collect(Collectors.toList());
-        List<String> actualSortingOptions = inventoryPage.getSortingDropdownOptions();
+        List<String> actualSortingOptions = inventoryPage.get().getSortingDropdownOptions();
         Assert.assertEquals(actualSortingOptions, expectedSortingOptions, "Sorting dropdown menu options did not " +
                 "match expected values");
     }
 
     @Test
     public void testSortingAlphabetically() {
-        inventoryPage.selectSortingOption(SortingOption.NAME_A_TO_Z);
-        List<String> inventoryItemNames = inventoryPage.getInventoryItemNames().stream()
+        inventoryPage.get().selectSortingOption(SortingOption.NAME_A_TO_Z);
+        List<String> inventoryItemNames = inventoryPage.get().getInventoryItemNames().stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
 
@@ -127,8 +128,8 @@ public class InventoryTests extends BaseTest {
 
     @Test
     public void testSortingReverseAlphabetically() {
-        inventoryPage.selectSortingOption(SortingOption.NAME_Z_TO_A);
-        List<String> inventoryItemNames = inventoryPage.getInventoryItemNames().stream()
+        inventoryPage.get().selectSortingOption(SortingOption.NAME_Z_TO_A);
+        List<String> inventoryItemNames = inventoryPage.get().getInventoryItemNames().stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
 
@@ -141,10 +142,10 @@ public class InventoryTests extends BaseTest {
 
     @Test
     public void testSortingPriceLowToHigh() {
-        inventoryPage.selectSortingOption(SortingOption.PRICE_LOW_TO_HIGH);
+        inventoryPage.get().selectSortingOption(SortingOption.PRICE_LOW_TO_HIGH);
 
-        List<Double> inventoryItemPrices = inventoryPage.getInventoryItems().stream()
-                .map(inventoryPage::getInventoryItemPriceAsDouble)
+        List<Double> inventoryItemPrices = inventoryPage.get().getInventoryItems().stream()
+                .map(inventoryPage.get()::getInventoryItemPriceAsDouble)
                 .collect(Collectors.toList());
 
         List<Double> expectedInventoryItemPricesSorted = new ArrayList<>(inventoryItemPrices);
@@ -156,10 +157,10 @@ public class InventoryTests extends BaseTest {
 
     @Test
     public void testSortingPriceHighToLow() {
-        inventoryPage.selectSortingOption(SortingOption.PRICE_HIGH_TO_LOW);
+        inventoryPage.get().selectSortingOption(SortingOption.PRICE_HIGH_TO_LOW);
 
-        List<Double> inventoryItemPrices = inventoryPage.getInventoryItems().stream()
-                .map(inventoryPage::getInventoryItemPriceAsDouble)
+        List<Double> inventoryItemPrices = inventoryPage.get().getInventoryItems().stream()
+                .map(inventoryPage.get()::getInventoryItemPriceAsDouble)
                 .collect(Collectors.toList());
 
         List<Double> expectedInventoryItemPricesSorted = new ArrayList<>(inventoryItemPrices);
@@ -171,19 +172,19 @@ public class InventoryTests extends BaseTest {
 
     @Test
     public void testAddToCartButtonReplacedWithRemoveButton() {
-        WebElement inventoryItem = inventoryPage.getInventoryItems().get(0);
-        inventoryPage.clickAddToCartButton(inventoryItem);
-        Assert.assertTrue(inventoryPage.getInventoryItemRemoveButtonElement(inventoryItem).isDisplayed(), "Add to " +
+        WebElement inventoryItem = inventoryPage.get().getInventoryItems().get(0);
+        inventoryPage.get().clickAddToCartButton(inventoryItem);
+        Assert.assertTrue(inventoryPage.get().getInventoryItemRemoveButtonElement(inventoryItem).isDisplayed(), "Add to " +
                 "cart button was not replaced by the Remove button after click");
     }
 
     @Test
     public void testShoppingCartBadgeCountIncrements() {
-        WebElement inventoryItem = inventoryPage.getInventoryItems().get(0);
-        int initialBadgeCount = inventoryPage.getShoppingCartBadgeValue();
+        WebElement inventoryItem = inventoryPage.get().getInventoryItems().get(0);
+        int initialBadgeCount = inventoryPage.get().getShoppingCartBadgeValue();
 
-        inventoryPage.clickAddToCartButton(inventoryItem);
-        int updatedBadgeCount = inventoryPage.getShoppingCartBadgeValue();
+        inventoryPage.get().clickAddToCartButton(inventoryItem);
+        int updatedBadgeCount = inventoryPage.get().getShoppingCartBadgeValue();
 
         Assert.assertEquals(updatedBadgeCount, initialBadgeCount + 1, "Shopping cart badge count did not increment " +
                 "after adding an item to the cart");
@@ -191,21 +192,21 @@ public class InventoryTests extends BaseTest {
 
     @Test
     public void testRemoveButtonReplacedWithAddToCartButton() {
-        WebElement inventoryItem = inventoryPage.getInventoryItems().get(0);
-        inventoryPage.clickAddToCartButton(inventoryItem);
-        inventoryPage.clickRemoveButton(inventoryItem);
-        Assert.assertTrue(inventoryPage.getInventoryItemAddToCartButtonElement(inventoryItem).isDisplayed(), "Remove " +
+        WebElement inventoryItem = inventoryPage.get().getInventoryItems().get(0);
+        inventoryPage.get().clickAddToCartButton(inventoryItem);
+        inventoryPage.get().clickRemoveButton(inventoryItem);
+        Assert.assertTrue(inventoryPage.get().getInventoryItemAddToCartButtonElement(inventoryItem).isDisplayed(), "Remove " +
                 "button was not replaced by the Add to Cart button after click");
     }
 
     @Test
     public void testShoppingCartBadgeCountDecrements() {
-        WebElement inventoryItem = inventoryPage.getInventoryItems().get(0);
-        inventoryPage.clickAddToCartButton(inventoryItem);
-        int badgeCountAfterAdd = inventoryPage.getShoppingCartBadgeValue();
+        WebElement inventoryItem = inventoryPage.get().getInventoryItems().get(0);
+        inventoryPage.get().clickAddToCartButton(inventoryItem);
+        int badgeCountAfterAdd = inventoryPage.get().getShoppingCartBadgeValue();
 
-        inventoryPage.clickRemoveButton(inventoryItem);
-        int badgeCountAfterRemove = inventoryPage.getShoppingCartBadgeValue();
+        inventoryPage.get().clickRemoveButton(inventoryItem);
+        int badgeCountAfterRemove = inventoryPage.get().getShoppingCartBadgeValue();
 
         Assert.assertEquals(badgeCountAfterRemove, badgeCountAfterAdd - 1, "Shopping cart badge count did not " +
                 "decrement after removing an item from the cart");
@@ -213,53 +214,53 @@ public class InventoryTests extends BaseTest {
 
     @Test
     public void testClickCartButton() {
-        CartPage cartPage = inventoryPage.clickCartButton();
+        CartPage cartPage = inventoryPage.get().clickCartButton();
         Assert.assertTrue(cartPage.isPageLoaded(), "Clicking cart button on Inventory page failed to navigate to Cart page.");
     }
 
     @Test(dataProvider = "inventoryItems")
     public void testPresenceOfItemsByName(InventoryItem item) {
-        Assert.assertTrue(inventoryPage.isItemPresent(item.getName()), "Item " + item.getName() + " was not found on the Inventory page.");
+        Assert.assertTrue(inventoryPage.get().isItemPresent(item.getName()), "Item " + item.getName() + " was not found on the Inventory page.");
     }
 
     @Test(dataProvider = "inventoryItems")
     public void testInventoryItemInfo(InventoryItem itemTestData) {
-        WebElement inventoryItem = inventoryPage.findInventoryItemByName(itemTestData.getName());
+        WebElement inventoryItem = inventoryPage.get().findInventoryItemByName(itemTestData.getName());
         Assert.assertNotNull(inventoryItem, "Item " + itemTestData.getName() + " was not found on the Inventory page.");
 
-        String actualDescription = inventoryPage.getInventoryItemDescriptionElement(inventoryItem).getText();
-        String actualPrice = inventoryPage.getInventoryItemPriceElement(inventoryItem).getText();
-        String actualImageUrl = inventoryPage.getInventoryItemImageSrcPath(inventoryItem);
+        String actualDescription = inventoryPage.get().getInventoryItemDescriptionElement(inventoryItem).getText();
+        String actualPrice = inventoryPage.get().getInventoryItemPriceElement(inventoryItem).getText();
+        String actualImageUrl = inventoryPage.get().getInventoryItemImageSrcPath(inventoryItem);
 
-        softAssert.assertEquals(actualDescription, itemTestData.getDescription(), "Description for item " + itemTestData.getName() +
+        softAssert.get().assertEquals(actualDescription, itemTestData.getDescription(), "Description for item " + itemTestData.getName() +
                 " did not match expected value.");
-        softAssert.assertEquals(actualPrice, itemTestData.getPrice(), "Price for item " + itemTestData.getName() +
+        softAssert.get().assertEquals(actualPrice, itemTestData.getPrice(), "Price for item " + itemTestData.getName() +
                 " did not match expected value.");
-        softAssert.assertEquals(actualImageUrl, itemTestData.getImageUrl(), "Image URL for item " + itemTestData.getName() +
+        softAssert.get().assertEquals(actualImageUrl, itemTestData.getImageUrl(), "Image URL for item " + itemTestData.getName() +
                 " did not match expected value.");
-        softAssert.assertAll();
+        softAssert.get().assertAll();
     }
 
     @Test
     public void testAbsenceOfNonExistentItem() {
         String itemName = "Invalid Item";
-        Assert.assertFalse(inventoryPage.isItemPresent(itemName), "Item " + itemName + " was unexpectedly found on the Inventory page.");
+        Assert.assertFalse(inventoryPage.get().isItemPresent(itemName), "Item " + itemName + " was unexpectedly found on the Inventory page.");
     }
 
     @Test
     public void testClickingBurgerMenuButton() {
-        inventoryPage.clickBurgerMenuButton();
-        Assert.assertFalse(inventoryPage.getMenuComponent().isMenuHidden(), "Menu did not appear after clicking burger menu button on Inventory page");
+        inventoryPage.get().clickBurgerMenuButton();
+        Assert.assertFalse(inventoryPage.get().getMenuComponent().isMenuHidden(), "Menu did not appear after clicking burger menu button on Inventory page");
     }
 
     @Test
     public void testAbsenceOfBurgerMenu() {
-        Assert.assertTrue(inventoryPage.getMenuComponent().isMenuHidden(), "Burger menu unexpectedly displayed on Inventory page initialization");
+        Assert.assertTrue(inventoryPage.get().getMenuComponent().isMenuHidden(), "Burger menu unexpectedly displayed on Inventory page initialization");
     }
 
     @Test(dataProvider = "inventoryItems")
     public void testClickInventoryItemName(InventoryItem item) {
-        InventoryItemPage itemPage = inventoryPage.clickInventoryItem(item.getName());
+        InventoryItemPage itemPage = inventoryPage.get().clickInventoryItem(item.getName());
         Assert.assertTrue(itemPage.isPageLoaded(), "Inventory Item page for " + item.getName() + " did not correctly " +
                 "load");
         Assert.assertEquals(itemPage.getInventoryDetailsName().getText(), item.getName(), "Clicking name for "+
@@ -269,7 +270,7 @@ public class InventoryTests extends BaseTest {
 
     @Test(dataProvider = "inventoryItems")
     public void testClickInventoryItemImage(InventoryItem item) {
-        InventoryItemPage itemPage = inventoryPage.clickInventoryItemImage(item.getName());
+        InventoryItemPage itemPage = inventoryPage.get().clickInventoryItemImage(item.getName());
         Assert.assertTrue(itemPage.isPageLoaded(), "Inventory Item page for " + item.getName() + " did not correctly " +
                 "load");
         Assert.assertEquals(itemPage.getInventoryDetailsName().getText(), item.getName(), "Clicking image for "+

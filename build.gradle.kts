@@ -17,5 +17,7 @@ dependencies {
 }
 
 tasks.test {
-    useTestNG()
+    useTestNG {
+        suites("src/test/resources/testing.xml")
+    }
 }

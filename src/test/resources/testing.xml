@@ -1,9 +1,13 @@
-<suite name="Test Suite" parallel="methods" thread_count="4"> <!--TODO: parallel test execution doesn't seem like its working as intended -->
+<suite name="Test Suite" parallel="methods" thread_count="4">
+    <listeners>
+        <listener class-name="framework.utils.RetryListener"/>
+    </listeners>
     <test name="All Tests">
         <classes>
             <class name="tests.LoginTests"/>
             <class name="tests.InventoryTests"/>
             <class name="tests.CartTests"/>
+            <class name="tests.MenuComponentTests"/>
         </classes>
     </test>
 </suite>

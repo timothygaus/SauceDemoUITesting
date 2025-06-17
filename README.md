@@ -7,7 +7,8 @@ This project demonstrates UI test automation for the [SauceDemo](https://www.sau
 - UI Testing for SauceDemo using Selenium and Java
 - TestNG for test management and data-driven testing
 - Cross browser testing support (planned)
-- Page Object Model (POM) for modular and maintanable test framework
+- Page Object Model (POM) for modular and maintainable test framework
+- Parallel test execution with 4 threads
 - CI/CD pipeline using GitHub Actions
 - Gradle for build and dependency management
 
@@ -34,7 +35,7 @@ cd SauceDemoUITesting
 Test reports will be generated in the `build/reports/tests/test` directory.
 
 ### Running Tests via GitHub Actions
-The CI/CD pipeline automatically triggers on every push or pull request. Check [here](https://github.com/timothygaus/SauceDemoUITesting/actions) for the latest resuls.
+The CI/CD pipeline automatically triggers on every push or pull request. Check [here](https://github.com/timothygaus/SauceDemoUITesting/actions) for the latest results.
 
 ## Future Enhancements
 This project is an active WIP intended for me to learn software testing tools, including building a robust and scalable UI testing framework. Some of the future features I have planned are:
