@@ -5,6 +5,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.CartPage;
 import pages.InventoryPage;
 import pages.LoginPage;
@@ -16,22 +17,26 @@ public class MenuComponentTests extends BaseTest {
 
     private static final ThreadLocal<MenuComponent> menuComponent = new ThreadLocal<>();
     private static final ThreadLocal<InventoryPage> inventoryPage = new ThreadLocal<>();
+    private static final ThreadLocal<SoftAssert> softAssert = new ThreadLocal<>();
 
     @BeforeMethod
     public void initializeMenuComponentTests() {
         inventoryPage.set(initializeToInventoryPage());
         menuComponent.set(inventoryPage.get().getMenuComponent());
+        softAssert.set(new SoftAssert());
     }
 
     @Test
     public void testMenuComponentElementsPresence() {
         inventoryPage.get().clickBurgerMenuButton();
         Assert.assertFalse(menuComponent.get().isMenuHidden(), "Menu is not displayed");
-        Assert.assertTrue(menuComponent.get().getCloseButton().isDisplayed(), "Close Button is not displayed");
-        Assert.assertTrue(menuComponent.get().getAllItemsLink().isDisplayed(), "All Items Link is not displayed");
-        Assert.assertTrue(menuComponent.get().getAboutLink().isDisplayed(), "About Link is not displayed");
-        Assert.assertTrue(menuComponent.get().getLogoutLink().isDisplayed(), "Logout Link is not displayed");
-        Assert.assertTrue(menuComponent.get().getResetAppStateLink().isDisplayed(), "Reset App State Link is not displayed");
+        softAssert.get().assertTrue(menuComponent.get().getCloseButton().isDisplayed(), "Close Button is not displayed");
+        softAssert.get().assertTrue(menuComponent.get().getAllItemsLink().isDisplayed(), "All Items Link is not displayed");
+        softAssert.get().assertTrue(menuComponent.get().getAboutLink().isDisplayed(), "About Link is not displayed");
+        softAssert.get().assertTrue(menuComponent.get().getLogoutLink().isDisplayed(), "Logout Link is not displayed");
+        softAssert.get().assertTrue(menuComponent.get().getResetAppStateLink().isDisplayed(), "Reset App State Link is not displayed");
+
+        softAssert.get().assertAll();
     }
 
     @Test
