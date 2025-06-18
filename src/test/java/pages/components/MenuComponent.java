@@ -34,7 +34,7 @@ public class MenuComponent {
     @FindBy(css = "div.bm-menu")
     WebElement bmMenu;
 
-    @FindBy(css = "div.bm-cross-button")
+    @FindBy(id = "react-burger-menu-btn")
     WebElement closeButton;
 
     @FindBy(id = "inventory_sidebar_link")
@@ -85,7 +85,7 @@ public class MenuComponent {
      */
     public boolean isMenuHidden() {
         try {
-            return wait.until(ExpectedConditions.domAttributeToBe(getBmMenuWrap(), "hidden", "true"));
+            return wait.until(ExpectedConditions.domAttributeToBe(getBmMenuWrap(), "aria-hidden", "true"));
         } catch (Exception e) {
             return false;
         }

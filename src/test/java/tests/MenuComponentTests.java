@@ -34,13 +34,13 @@ public class MenuComponentTests extends BaseTest {
         Assert.assertTrue(menuComponent.get().getResetAppStateLink().isDisplayed(), "Reset App State Link is not displayed");
     }
 
-//    @Test
-//    public void testCloseButtonFunctionality() {
-//        inventoryPage.get().clickBurgerMenuButton();
-//        Assert.assertFalse(menuComponent.get().isMenuHidden(), "Menu was not displayed after clicking Menu button");
-//        menuComponent.get().clickCloseButton();
-//        Assert.assertTrue(menuComponent.get().isMenuHidden(), "Menu is still displayed after clicking Close Button");
-//    }
+    @Test
+    public void testCloseButtonFunctionality() {
+        inventoryPage.get().clickBurgerMenuButton();
+        Assert.assertFalse(menuComponent.get().isMenuHidden(), "Menu was not displayed after clicking Menu button");
+        menuComponent.get().clickCloseButton();
+        Assert.assertTrue(menuComponent.get().isMenuHidden(), "Menu is still displayed after clicking Close Button");
+    }
 
     @Test
     public void testAllItemsLinkFunctionalityOnInventoryPage() {
