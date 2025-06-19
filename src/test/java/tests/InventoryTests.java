@@ -1,13 +1,11 @@
 package tests;
 
 import framework.base.BaseTest;
-import framework.utils.InventoryDataLoader;
 import framework.utils.InventoryItem;
 import framework.utils.enums.SortingOption;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.CartPage;
@@ -29,21 +27,6 @@ public class InventoryTests extends BaseTest {
     public void initializeInventoryTest() {
         inventoryPage.set(initializeToInventoryPage());
         softAssert.set(new SoftAssert());
-    }
-
-    @DataProvider(name = "inventoryItems")
-    public static Object[][] provideInventoryItems() {
-        try {
-            List<InventoryItem> items = InventoryDataLoader.loadInventoryItems();
-            Object[][] data = new Object[items.size()][1];
-            for (int i = 0; i < items.size(); i++) {
-                data[i][0] = items.get(i);
-            }
-            return data;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
     }
 
     @Test
@@ -218,12 +201,12 @@ public class InventoryTests extends BaseTest {
         Assert.assertTrue(cartPage.isPageLoaded(), "Clicking cart button on Inventory page failed to navigate to Cart page.");
     }
 
-    @Test(dataProvider = "inventoryItems")
+    @Test(dataProvider = "inventoryItems", dataProviderClass = framework.utils.TestDataProvider.class)
     public void testPresenceOfItemsByName(InventoryItem item) {
         Assert.assertTrue(inventoryPage.get().isItemPresent(item.getName()), "Item " + item.getName() + " was not found on the Inventory page.");
     }
 
-    @Test(dataProvider = "inventoryItems")
+    @Test(dataProvider = "inventoryItems", dataProviderClass = framework.utils.TestDataProvider.class)
     public void testInventoryItemInfo(InventoryItem itemTestData) {
         WebElement inventoryItem = inventoryPage.get().findInventoryItemByName(itemTestData.getName());
         Assert.assertNotNull(inventoryItem, "Item " + itemTestData.getName() + " was not found on the Inventory page.");
@@ -258,7 +241,7 @@ public class InventoryTests extends BaseTest {
         Assert.assertTrue(inventoryPage.get().getMenuComponent().isMenuHidden(), "Burger menu unexpectedly displayed on Inventory page initialization");
     }
 
-    @Test(dataProvider = "inventoryItems")
+    @Test(dataProvider = "inventoryItems", dataProviderClass = framework.utils.TestDataProvider.class)
     public void testClickInventoryItemName(InventoryItem item) {
         InventoryItemPage itemPage = inventoryPage.get().clickInventoryItem(item.getName());
         Assert.assertTrue(itemPage.isPageLoaded(), "Inventory Item page for " + item.getName() + " did not correctly " +
@@ -268,7 +251,7 @@ public class InventoryTests extends BaseTest {
                 itemPage.getInventoryDetailsName().getText());
     }
 
-    @Test(dataProvider = "inventoryItems")
+    @Test(dataProvider = "inventoryItems", dataProviderClass = framework.utils.TestDataProvider.class)
     public void testClickInventoryItemImage(InventoryItem item) {
         InventoryItemPage itemPage = inventoryPage.get().clickInventoryItemImage(item.getName());
         Assert.assertTrue(itemPage.isPageLoaded(), "Inventory Item page for " + item.getName() + " did not correctly " +

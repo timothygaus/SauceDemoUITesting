@@ -303,5 +303,16 @@ public class InventoryPage extends BasePage {
         return parsePrice(getInventoryItemPriceElement(inventoryItem).getText());
     }
 
-
+    /**
+     * Clicks the first inventory item on the page and navigates to its InventoryItemPage
+     * @return InventoryItemPage
+     */
+    public InventoryItemPage clickFirstInventoryItem() {
+        if (getInventoryItems().isEmpty()) {
+            throw new RuntimeException("No inventory items found on the page.");
+        }
+        click(webDriver, getInventoryItemNameElement(getInventoryItems().get(0)),
+                () -> new InventoryItemPage(webDriver).isPageLoaded());
+        return new InventoryItemPage(webDriver);
+    }
 }

@@ -8,6 +8,7 @@
             <class name="tests.InventoryTests"/>
             <class name="tests.CartTests"/>
             <class name="tests.MenuComponentTests"/>
+            <class name="tests.InventoryItemTests"/>
         </classes>
     </test>
 </suite>
