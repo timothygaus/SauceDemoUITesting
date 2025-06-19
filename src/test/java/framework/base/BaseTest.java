@@ -1,11 +1,14 @@
 package framework.base;
 
+import framework.config.ConfigReader;
 import framework.driver.DriverManager;
 import framework.utils.Urls;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import pages.InventoryPage;
 import pages.LoginPage;
 
@@ -18,8 +21,12 @@ public class BaseTest {
     }
 
     @BeforeMethod
-    public void setUp() {
+    @Parameters({"browser"})
+    public void setUp(@Optional String browser) {
         System.out.println("Setting up the test environment...");
+        if (browser != null && !browser.isEmpty()) {
+            ConfigReader.setProperty("browser", browser);
+        }
         webDriver.set(new DriverManager().getDriver());
     }
 

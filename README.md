@@ -1,12 +1,12 @@
 # SauceDemo UI Testing
 
 ## Project Description
-This project demonstrates UI test automation for the [SauceDemo](https://www.saucedemo.com/) website using Java, Selenium, and TestNG. SauceDemo is a mock ecommerce site designed for developers to practice testing skills, including manual testing and automated UI testing. This project showcases software test engineering skills such as the design of a custom testing framework using the page object model (POM), cross-browser testing (planned), and continuous integration using GitHub Actions.
+This project demonstrates UI test automation for the [SauceDemo](https://www.saucedemo.com/) website using Java, Selenium, and TestNG. SauceDemo is a mock ecommerce site designed for developers to practice testing skills, including manual testing and automated UI testing. This project showcases software test engineering skills such as the design of a custom testing framework using the page object model (POM), cross-browser testing, and continuous integration using GitHub Actions.
 
 ## Features
 - UI Testing for SauceDemo using Selenium and Java
 - TestNG for test management and data-driven testing
-- Cross browser testing support (planned)
+- Cross browser testing support for Chrome, Firefox, and Edge
 - Page Object Model (POM) for modular and maintainable test framework
 - Parallel test execution with 4 threads
 - CI/CD pipeline using GitHub Actions
@@ -43,7 +43,6 @@ The CI/CD pipeline automatically triggers on every push or pull request. Check [
 This project is an active WIP intended for me to learn software testing tools, including building a robust and scalable UI testing framework. Some of the future features I have planned are:
 - Expanded test coverage (adding items to the cart, checkout process, etc)
 - Improved reporting with more detailed logs and screenshots
-- Cross browser testing support
 
 ## Contact
 - Author: Timothy Gause

@@ -1,8 +1,31 @@
-<suite name="Test Suite" parallel="methods" thread_count="4">
+<suite name="Cross Browser Test Suite" parallel="methods" thread_count="4">
     <listeners>
         <listener class-name="framework.utils.RetryListener"/>
     </listeners>
-    <test name="All Tests">
+    <test name="Chrome Tests">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="tests.LoginTests"/>
+            <class name="tests.InventoryTests"/>
+            <class name="tests.CartTests"/>
+            <class name="tests.MenuComponentTests"/>
+            <class name="tests.InventoryItemTests"/>
+        </classes>
+    </test>
+
+    <test name="Firefox Tests">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="tests.LoginTests"/>
+            <class name="tests.InventoryTests"/>
+            <class name="tests.CartTests"/>
+            <class name="tests.MenuComponentTests"/>
+            <class name="tests.InventoryItemTests"/>
+        </classes>
+    </test>
+
+    <test name="Edge Tests">
+        <parameter name="browser" value="edge"/>
         <classes>
             <class name="tests.LoginTests"/>
             <class name="tests.InventoryTests"/>
