@@ -67,34 +67,28 @@ This document will be used to track the implementation of planned test cases for
 
 ## Product Details Page
 ### UI Element Presence
-- [ ] Verify that the menu button is present
-- [ ] Verify that the Swag Labs header is present
-- [ ] Verify that the cart icon is present
-- [ ] Verify that the Back to products button sub header is present
-- [ ] Verify that the product name is present
-- [ ] Verify that the product image is present
-- [ ] Verify that the product description is present
-- [ ] Verify that the product price is present
-- [ ] Verify that the Add to cart button is present
+- [x] Verify that the menu button is present
+- [x] Verify that the Swag Labs header is present
+- [x] Verify that the cart icon is present
+- [x] Verify that the Back to products button sub header is present
+- [x] Verify that the product name is present
+- [x] Verify that the product image is present
+- [x] Verify that the product description is present
+- [x] Verify that the product price is present
+- [x] Verify that the Add to cart button is present
 
 ### Product information
-- [ ] Verify that the following product information is correct based on the product selection from the previous page; product name, product image, product description, product price
+- [x] Verify that the following product information is correct based on the product selection from the previous page; product name, product image, product description, product price
 
 ### Navigation functionality
-- [ ] Verify that clicking the Back to products button navigates the user to the Inventory page
-- [ ] Verify that clicking the cart button navigates the user to the cart page
+- [x] Verify that clicking the Back to products button navigates the user to the Inventory page
+- [x] Verify that clicking the cart button navigates the user to the cart page
 
 ### Cart functionality
-- [ ] Verify that after clicking the “Add to cart” button on a product card, the “Add to cart” button is replaced with the “Remove” button
-- [ ] Verify that after clicking the “Add to cart” button on a product card, the cart icon is updated
-- [ ] Verify that after clicking the “Remove” button on a product card, the “Remove” button is replaced with the “Add to cart” button
-- [ ] Verify that after clicking the “Remove” button on a product card, the cart icon is updated
-
-### Menu Interaction
-- [ ] Verify that clicking the menu button opens the side bar menu
-- [ ] Verify that the following elements are present; All Items, About, Logout, Reset App State
-- [ ] Verify that clicking the All Items option navigates the user to the Inventory page
-- [ ] Verify that clicking the Logout option navigates the user to the Login page
+- [x] Verify that after clicking the “Add to cart” button on a product card, the “Add to cart” button is replaced with the “Remove” button
+- [x] Verify that after clicking the “Add to cart” button on a product card, the cart icon is updated
+- [x] Verify that after clicking the “Remove” button on a product card, the “Remove” button is replaced with the “Add to cart” button
+- [x] Verify that after clicking the “Remove” button on a product card, the cart icon is updated
 
 
 ## Cart Page
