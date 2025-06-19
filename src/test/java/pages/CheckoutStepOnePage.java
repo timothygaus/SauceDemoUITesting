@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.components.MenuComponent;
 
 import static framework.utils.WebElementUtils.click;
+import static framework.utils.WebElementUtils.type;
 
 public class CheckoutStepOnePage extends BasePage {
 
@@ -103,12 +104,36 @@ public class CheckoutStepOnePage extends BasePage {
     }
 
     /**
-     * Clicks the cancel button and navigates to the inventory page
-     * @return InventoryPage
+     * Enters the first name into the first name field.
+     * @param firstName String
      */
-    public InventoryPage clickCancelButton() {
-        click(webDriver, getCancelButton(), () -> new InventoryPage(webDriver).isPageLoaded());
-        return new InventoryPage(webDriver);
+    public void enterFirstName(String firstName) {
+        type(webDriver, getFirstNameField(), firstName);
+    }
+
+    /**
+     * Enters the last name into the last name field.
+     * @param lastName String
+     */
+    public void enterLastName(String lastName) {
+        type(webDriver, getLastNameField(), lastName);
+    }
+
+    /**
+     * Enters the postal code into the postal code field.
+     * @param postalCode String
+     */
+    public void enterPostalCode(String postalCode) {
+        type(webDriver, getPostalCodeField(), postalCode);
+    }
+
+    /**
+     * Clicks the cancel button and navigates to the cart page
+     * @return CartPage
+     */
+    public CartPage clickCancelButton() {
+        click(webDriver, getCancelButton(), () -> new CartPage(webDriver).isPageLoaded());
+        return new CartPage(webDriver);
     }
 
     /**
@@ -118,5 +143,75 @@ public class CheckoutStepOnePage extends BasePage {
     public CheckoutStepTwoPage clickContinueButton() {
         click(webDriver, getContinueButton(), () -> new CheckoutStepTwoPage(webDriver).isPageLoaded());
         return new CheckoutStepTwoPage(webDriver);
+    }
+
+    /**
+     * Checks if the error message is displayed.
+     * @return true if the error message is displayed, false otherwise.
+     */
+    public boolean isErrorMessageVisible() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(getErrorMessage()));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Clicks the error message button to close the error message.
+     */
+    public void clickErrorMessageButton() {
+        click(webDriver, getErrorMessageButton(), () -> !getErrorMessage().isDisplayed());
+    }
+
+    /**
+     * Checks if the first name error icon is displayed.
+     * @return true if the first name error icon is displayed, false otherwise.
+     */
+    public boolean isFirstNameErrorIconVisible() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(getFirstNameErrorIcon()));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if the last name error icon is displayed.
+     * @return true if the last name error icon is displayed, false otherwise.
+     */
+    public boolean isLastNameErrorIconVisible() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(getLastNameErrorIcon()));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if the postal code error icon is displayed.
+     * @return true if the postal code error icon is displayed, false otherwise.
+     */
+    public boolean isPostalCodeErrorIconVisible() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(getPostalCodeErrorIcon()));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Helper function to set up the checkout step one page by adding an item to the cart and navigating to the checkout step one page.
+     * @param inventoryPage InventoryPage
+     * @return CheckoutStepOnePage
+     */
+    public static CheckoutStepOnePage setUpCheckoutStepOnePage(InventoryPage inventoryPage) {
+        inventoryPage.clickAddToCartButton(inventoryPage.getFirstInventoryItem());
+        CartPage cartPage = inventoryPage.clickCartButton();
+        return cartPage.clickCheckoutButton();
     }
 }

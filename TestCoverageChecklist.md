@@ -121,29 +121,29 @@ This document will be used to track the implementation of planned test cases for
 
 ## Checkout Step One Page
 ### UI Functionality
-- [ ] Verify that the menu button is present
-- [ ] Verify that the Swag Labs header is present
-- [ ] Verify that the cart icon is present
-- [ ] Verify that the Checkout: Your Information sub header is present
-- [ ] Verify that the First Name field is present
-- [ ] Verify that the Last Name field is present
-- [ ] Verify that the Zip/Postal Code field is present
-- [ ] Verify that the Cancel button is present
-- [ ] Verify that the Continue button is present
+- [x] Verify that the menu button is present
+- [x] Verify that the Swag Labs header is present
+- [x] Verify that the cart icon is present
+- [x] Verify that the Checkout: Your Information sub header is present
+- [x] Verify that the First Name field is present
+- [x] Verify that the Last Name field is present
+- [x] Verify that the Zip/Postal Code field is present
+- [x] Verify that the Cancel button is present
+- [x] Verify that the Continue button is present
 
 ### Input Functionality
-- [ ] Verify that the user can enter text into the First Name field
-- [ ] Verify that the user can enter text into the Last Name field
-- [ ] Verify that the user can enter text into the Zip/Postal Code field
+- [x] Verify that the user can enter text into the First Name field
+- [x] Verify that the user can enter text into the Last Name field
+- [x] Verify that the user can enter text into the Zip/Postal Code field
 
 ### Navigation Functionality
-- [ ] Verify that clicking the Cancel button navigates the user to the cart page
-- [ ] Verify that if the continue button is clicked and the First Name field is empty, the user remains on the current page and an error is displayed stating that the First Name field is required
-- [ ] Verify that if the continue button is clicked and the Last Name field is empty, the user remains on the current page and an error is displayed stating that the Last Name field is required
-- [ ] Verify that if the continue button is clicked and the Zip/Postal Code field is empty, the user remains on the current page and an error is displayed stating that the Postal Code is required
-- [ ] Verify that error icons appear next to all input fields when an error is displayed
-- [ ] Verify that clicking the close button (x) on the error message closes the error and removes the error icons from the input fields
-- [ ] Verify that clicking the Continue button when all input fields are populated with text navigates the user to the Checkout Step Two page
+- [x] Verify that clicking the Cancel button navigates the user to the cart page
+- [x] Verify that if the continue button is clicked and the First Name field is empty, the user remains on the current page and an error is displayed stating that the First Name field is required
+- [x] Verify that if the continue button is clicked and the Last Name field is empty, the user remains on the current page and an error is displayed stating that the Last Name field is required
+- [x] Verify that if the continue button is clicked and the Zip/Postal Code field is empty, the user remains on the current page and an error is displayed stating that the Postal Code is required
+- [x] Verify that error icons appear next to all input fields when an error is displayed
+- [x] Verify that clicking the close button (x) on the error message closes the error and removes the error icons from the input fields
+- [x] Verify that clicking the Continue button when all input fields are populated with text navigates the user to the Checkout Step Two page
 
 
 ## Checkout Step Two Page
