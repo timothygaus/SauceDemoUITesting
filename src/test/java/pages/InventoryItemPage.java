@@ -84,7 +84,13 @@ public class InventoryItemPage extends BasePage {
             wait.until(ExpectedConditions.visibilityOf(getInventoryDetailsName()));
             wait.until(ExpectedConditions.visibilityOf(getInventoryDetailsDescription()));
             wait.until(ExpectedConditions.visibilityOf(getInventoryDetailsPrice()));
-            wait.until(ExpectedConditions.visibilityOf(getAddToCartButton()));
+            try {
+                wait.until(ExpectedConditions.visibilityOf(getAddToCartButton()));
+            } catch (TimeoutException e) {
+                // If the add to cart button is not present, it means the item is already in the cart
+                wait.until(ExpectedConditions.visibilityOf(getRemoveButton()));
+            }
+
             return true;
         } catch (TimeoutException e) {
             return false;

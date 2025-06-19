@@ -65,13 +65,13 @@ public class CartPage extends BasePage {
     public WebElement getCheckoutButton() {return checkoutButton;}
     public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
     public WebElement getShoppingCartLink() {return shoppingCartLink;}
+    public WebElement getShoppingCartBadge() {return shoppingCartBadge;}
     public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
     public WebElement getCartDescriptionLabel() {return cartDescriptionLabel;}
     public WebElement getCartContentsContainer() {return cartContentsContainer;}
     public WebElement getCartQuantityLabel() {return cartQuantityLabel;}
     public WebElement getAppLogo() {return appLogo;}
     public List<WebElement> getCartItems() {return cartItems;}
-    public WebElement getShoppingCartBadge() {return shoppingCartBadge;}
     public WebElement getSecondaryHeaderTitle() {return secondaryHeaderTitle;}
     public MenuComponent getMenuComponent() {return menuComponent;}
 
@@ -127,6 +127,15 @@ public class CartPage extends BasePage {
      */
     public WebElement getInventoryItemDescriptionElement(WebElement cartItem) {
         return cartItem.findElement(By.cssSelector("div.inventory_item_desc"));
+    }
+
+    /**
+     * Gets the inventory_item_quantity WebElement for a given cart_item WebElement
+     * @param cartItem cart_item WebElement
+     * @return WebElement inventory_item_quantity
+     */
+    public WebElement getInventoryItemQuantityElement(WebElement cartItem) {
+        return cartItem.findElement(By.cssSelector("div.cart_quantity"));
     }
 
     /**
@@ -189,5 +198,25 @@ public class CartPage extends BasePage {
     public InventoryItemPage clickInventoryItemName(WebElement cartItem) {
         click(webDriver, getInventoryItemNameElement(cartItem), () -> new InventoryItemPage(webDriver).isPageLoaded());
         return new InventoryItemPage(webDriver);
+    }
+
+    public boolean isShoppingCartBadgePresent() {
+        try {
+            return getShoppingCartBadge().isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Gets the integer value of the shopping cart badge. If the badge is not present, returns 0.
+     * @return int value of shopping cart badge, or 0 if not present
+     */
+    public int getShoppingCartBadgeValue() {
+        if (isShoppingCartBadgePresent()) {
+            return Integer.parseInt(getShoppingCartBadge().getText());
+        } else {
+            return 0;
+        }
     }
 }

@@ -93,30 +93,30 @@ This document will be used to track the implementation of planned test cases for
 
 ## Cart Page
 ### UI Element Presence
-- [ ] Verify that the menu button is present
-- [ ] Verify that the Swag Labs header is present
-- [ ] Verify that the cart icon is present
-- [ ] Verify that the Your Cart sub header is present
-- [ ] Verify that the QTY label is present
-- [ ] Verify that the Description label is present
-- [ ] Verify the presence of items based on previous conditions
-- [ ] Verify that the following product information is present: product name, product quantity, product description, product price, remove button
-- [ ] Verify that the Continue Shopping button is present
-- [ ] Verify that the Checkout button is present
+- [x] Verify that the menu button is present
+- [x] Verify that the Swag Labs header is present
+- [x] Verify that the cart icon is present
+- [x] Verify that the Your Cart sub header is present
+- [x] Verify that the QTY label is present
+- [x] Verify that the Description label is present
+- [x] Verify the presence of items based on previous conditions
+- [x] Verify that the following product information is present: product name, product quantity, product description, product price, remove button
+- [x] Verify that the Continue Shopping button is present
+- [x] Verify that the Checkout button is present
 
 ### Navigation Functionality
-- [ ] Verify that clicking the Continue Shopping button navigates the user to the Inventory page
-- [ ] Verify that clicking the Checkout button navigates the user to the Checkout Step One page
-- [ ] Verify that clicking any product’s name navigates the user to the product page for that product
+- [x] Verify that clicking the Continue Shopping button navigates the user to the Inventory page
+- [x] Verify that clicking the Checkout button navigates the user to the Checkout Step One page
+- [x] Verify that clicking any product’s name navigates the user to the product page for that product
 
 ### Product Information
-- [ ] Verify that, for each product present, the following are correct, based on the product’s name; product description, product price
-- [ ] Verify that the quantity is correct based on previous selections
+- [x] Verify that, for each product present, the following are correct, based on the product’s name; product description, product price
+- [x] Verify that the quantity is correct based on previous selections
 
 ### Cart Functionality
-- [ ] If at least one item is present, verify that the number displayed on the cart button’s badge matches the number of items displayed on the cart page
-- [ ] If no items are present, verify that the cart button does not have a number badge displayed
-- [ ] Verify that clicking the remove button on a product cart removes that product from the cart page and the number badge on the cart button is decremented by one
+- [x] If at least one item is present, verify that the number displayed on the cart button’s badge matches the number of items displayed on the cart page
+- [x] If no items are present, verify that the cart button does not have a number badge displayed
+- [x] Verify that clicking the remove button on a product cart removes that product from the cart page and the number badge on the cart button is decremented by one
 
 
 ## Checkout Step One Page

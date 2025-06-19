@@ -304,6 +304,17 @@ public class InventoryPage extends BasePage {
     }
 
     /**
+     * Gets the first inventory item on the page
+     * @return WebElement of the first inventory item
+     */
+    public WebElement getFirstInventoryItem() {
+        if (getInventoryItems().isEmpty()) {
+            throw new RuntimeException("No inventory items found on the page.");
+        }
+        return getInventoryItems().get(0);
+    }
+
+    /**
      * Clicks the first inventory item on the page and navigates to its InventoryItemPage
      * @return InventoryItemPage
      */
@@ -311,7 +322,7 @@ public class InventoryPage extends BasePage {
         if (getInventoryItems().isEmpty()) {
             throw new RuntimeException("No inventory items found on the page.");
         }
-        click(webDriver, getInventoryItemNameElement(getInventoryItems().get(0)),
+        click(webDriver, getInventoryItemNameElement(getFirstInventoryItem()),
                 () -> new InventoryItemPage(webDriver).isPageLoaded());
         return new InventoryItemPage(webDriver);
     }
