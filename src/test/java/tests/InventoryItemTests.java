@@ -21,6 +21,8 @@ public class InventoryItemTests extends BaseTest {
         softAssert.set(new SoftAssert());
     }
 
+    //TODO: verify text of header elements on Inventory Item page
+
     @Test
     public void testInventoryItemPageHeaderElementsDisplayed() {
         InventoryItemPage inventoryItemPage = inventoryPage.get().clickFirstInventoryItem();

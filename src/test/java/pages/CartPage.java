@@ -1,6 +1,7 @@
 package pages;
 
 import framework.base.BasePage;
+import framework.utils.InventoryItem;
 import framework.utils.Urls;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -218,5 +219,23 @@ public class CartPage extends BasePage {
         } else {
             return 0;
         }
+    }
+
+    /**
+     * Gets the cart items as a list of InventoryItem objects.
+     * Each InventoryItem object contains the description, name, and price of the item.
+     * URL is not included as it is not available in the cart page, and set to an empty string.
+     * @return List of InventoryItem objects
+     */
+    public List<InventoryItem> getCartItemsAsJsonObjects() {
+        List<InventoryItem> items = new java.util.ArrayList<>();
+        for (WebElement cartItem : getCartItems()) {
+            String name = getInventoryItemNameElement(cartItem).getText();
+            String description = getInventoryItemDescriptionElement(cartItem).getText();
+            String price = getInventoryItemPriceElement(cartItem).getText();
+            InventoryItem item = new InventoryItem(name, description, price);
+            items.add(item);
+        }
+        return items;
     }
 }

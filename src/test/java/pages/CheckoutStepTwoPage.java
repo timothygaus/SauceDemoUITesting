@@ -1,6 +1,7 @@
 package pages;
 
 import framework.base.BasePage;
+import framework.utils.InventoryItem;
 import framework.utils.Urls;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -11,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.components.MenuComponent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static framework.utils.WebElementUtils.click;
@@ -82,6 +84,8 @@ public class CheckoutStepTwoPage extends BasePage {
 
     private final MenuComponent menuComponent;
 
+    private List<InventoryItem> addedCartItems;
+
     public WebElement getBurgerMenuBtn() {return burgerMenuBtn;}
     public WebElement getAppLogo() {return appLogo;}
     public WebElement getShoppingCartContainer() {return shoppingCartContainer;}
@@ -102,6 +106,9 @@ public class CheckoutStepTwoPage extends BasePage {
     public WebElement getCancelButton() {return cancelButton;}
     public WebElement getFinishButton() {return finishButton;}
     public MenuComponent getMenuComponent() {return menuComponent;}
+    public List<InventoryItem> getAddedCartItems() {return addedCartItems;}
+
+    public void setAddedCartItems(List<InventoryItem> addedCartItems) {this.addedCartItems = addedCartItems;}
 
     /**
      * Checks that the checkout step two page is loaded by checking the URL and key WebElements are displayed.
@@ -182,5 +189,41 @@ public class CheckoutStepTwoPage extends BasePage {
     public CheckoutCompletePage clickFinishButton() {
         click(webDriver, getFinishButton(), () -> new CheckoutCompletePage(webDriver).isPageLoaded());
         return new CheckoutCompletePage(webDriver);
+    }
+
+    /**
+     * Helper function to set up the CheckoutStepTwoPage for tests by adding an item to the cart, navigating to the cart,
+     * filling out the checkout step one form, and then navigating to the checkout step two page. The contents of the cart
+     * page are saved and passed to the CheckoutStepTwoPage.
+     * @param inventoryPage InventoryPage
+     * @return CheckoutStepTwoPage
+     */
+    public static CheckoutStepTwoPage setUpCheckoutStepTwoPage(InventoryPage inventoryPage) {
+        inventoryPage.clickAddToCartButton(inventoryPage.getFirstInventoryItem());
+        CartPage cartPage = inventoryPage.clickCartButton();
+        List<InventoryItem> addedItems = cartPage.getCartItemsAsJsonObjects();
+        CheckoutStepOnePage checkoutStepOnePage = cartPage.clickCheckoutButton();
+        checkoutStepOnePage.enterFirstName("John");
+        checkoutStepOnePage.enterLastName("Doe");
+        checkoutStepOnePage.enterPostalCode("12345");
+        CheckoutStepTwoPage checkoutStepTwoPage = checkoutStepOnePage.clickContinueButton();
+        checkoutStepTwoPage.setAddedCartItems(addedItems);
+        return checkoutStepTwoPage;
+    }
+
+    /**
+     * Extracts the cart items as InventoryItem objects from the cart items displayed on the checkout step two page.
+     * @return List of InventoryItem objects
+     */
+    public List<InventoryItem> extractCartItemsAsJsonObjects() {
+        List<InventoryItem> cartItemsList = new ArrayList<>();
+        for(WebElement cartItem : getCartItems()) {;
+            String itemName = getInventoryItemNameElement(cartItem).getText();
+            String itemDescription = getInventoryItemDescriptionElement(cartItem).getText();
+            String itemPrice = getInventoryItemPriceElement(cartItem).getText();
+            InventoryItem inventoryItem = new InventoryItem(itemName, itemDescription, itemPrice);
+            cartItemsList.add(inventoryItem);
+        }
+        return cartItemsList;
     }
 }

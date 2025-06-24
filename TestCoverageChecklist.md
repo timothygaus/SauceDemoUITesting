@@ -148,25 +148,25 @@ This document will be used to track the implementation of planned test cases for
 
 ## Checkout Step Two Page
 ### UI Element Presence
-- [ ] Verify that the menu button is present
-- [ ] Verify that the Swag Labs header is present
-- [ ] Verify that the cart icon is present
-- [ ] Verify that the Checkout: Overview sub header is present
-- [ ] Verify that the QTY label is present
-- [ ] Verify that the Description label is present
-- [ ] Verify the presence of items based on previous conditions
-- [ ] Verify that the Payment Information label is present and payment information is present
-- [ ] Verify that the Shipping Information label is present and shipping information is present
-- [ ] Verify that the Price Total label is present, and item total, tax, and total are present
-- [ ] Verify that the Cancel button is present
-- [ ] Verify that the Finish button is present
+- [x] Verify that the menu button is present
+- [x] Verify that the Swag Labs header is present
+- [x] Verify that the cart icon is present
+- [x] Verify that the Checkout: Overview sub header is present
+- [x] Verify that the QTY label is present
+- [x] Verify that the Description label is present
+- [x] Verify the presence of items based on previous conditions
+- [x] Verify that the Payment Information label is present and payment information is present
+- [x] Verify that the Shipping Information label is present and shipping information is present
+- [x] Verify that the Price Total label is present, and item total, tax, and total are present
+- [x] Verify that the Cancel button is present
+- [x] Verify that the Finish button is present
 
 ### Navigation Functionality
-- [ ] Verify that clicking the Cancel button navigates the user to the Inventory page
-- [ ] Verify that clicking the Checkout button navigates the user to the Checkout Complete page
+- [x] Verify that clicking the Cancel button navigates the user to the Inventory page
+- [x] Verify that clicking the Checkout button navigates the user to the Checkout Complete page
 
 ### Product Information
-- [ ] Verify that, for each product present, the following are correct, based on the product’s name; product description, product price
+- [x] Verify that, for each product present, the following are correct, based on the product’s name; product description, product price
 - [ ] Verify that the quantity is correct based on previous selections
 - [ ] Verify that the user can navigate to the product page for any item by clicking on the product’s name
 

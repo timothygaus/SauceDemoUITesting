@@ -11,6 +11,7 @@
             <class name="tests.MenuComponentTests"/>
             <class name="tests.InventoryItemTests"/>
             <class name="tests.CheckoutStepOneTests"/>
+            <class name="tests.CheckoutStepTwoTests"/>
         </classes>
     </test>
 
@@ -23,6 +24,7 @@
             <class name="tests.MenuComponentTests"/>
             <class name="tests.InventoryItemTests"/>
             <class name="tests.CheckoutStepOneTests"/>
+            <class name="tests.CheckoutStepTwoTests"/>
         </classes>
     </test>
 
@@ -35,6 +37,7 @@
             <class name="tests.MenuComponentTests"/>
             <class name="tests.InventoryItemTests"/>
             <class name="tests.CheckoutStepOneTests"/>
+            <class name="tests.CheckoutStepTwoTests"/>
         </classes>
     </test>
 </suite>
