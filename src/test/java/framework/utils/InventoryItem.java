@@ -4,6 +4,10 @@ import java.util.Objects;
 
 public class InventoryItem {
 
+    public InventoryItem() {
+        // Default constructor
+    }
+
     public InventoryItem(String name, String description, String price, String imageUrl) {
         this.name = name;
         this.description = description;
