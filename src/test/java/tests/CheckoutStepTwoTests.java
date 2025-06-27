@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.CheckoutCompletePage;
 import pages.CheckoutStepTwoPage;
+import pages.InventoryItemPage;
 import pages.InventoryPage;
 
 import java.util.List;
@@ -77,5 +78,55 @@ public class CheckoutStepTwoTests extends BaseTest {
         Assert.assertTrue(checkoutCompletePage.isPageLoaded(), "Finish button did not redirect to checkout complete page");
     }
 
+    @Test
+    public void testCartItemQuantity() {
+        final int EXPECTED_QUANTITY = 1; // App only has functionality to add one of each item to the cart
+        for(WebElement item : checkoutStepTwoPage.get().getCartItems()) {
+            Assert.assertEquals(Integer.parseInt(checkoutStepTwoPage.get().getCartQuantityElement(item).getText()), EXPECTED_QUANTITY,
+                    "Cart item quantity does not match expected value of " + EXPECTED_QUANTITY);
+        }
+    }
 
+    @Test
+    public void testNavigatingToInventoryItemPage() {
+        WebElement firstCartItem = checkoutStepTwoPage.get().getCartItems().get(0);
+        String itemName = checkoutStepTwoPage.get().getInventoryItemNameElement(firstCartItem).getText();
+        InventoryItemPage inventoryItemPage = checkoutStepTwoPage.get().clickCartItem(firstCartItem);
+
+        Assert.assertTrue(inventoryItemPage.isPageLoaded(), "Navigating to inventory item page failed");
+        Assert.assertEquals(inventoryItemPage.getInventoryDetailsName().getText(), itemName, "Item name on inventory item page does not match the cart item name");
+    }
+
+    @Test
+    public void testPaymentInformation() {
+        String expectedPaymentInfo = "SauceCard #31337"; // App does not have functionality to change payment info, so this is the expected value
+        String actualPaymentInfo = checkoutStepTwoPage.get().getPaymentValueLabel().getText();
+
+        Assert.assertEquals(actualPaymentInfo, expectedPaymentInfo, "Payment information does not match expected value");
+    }
+
+    @Test
+    public void testShippingInformation() {
+        String expectedShippingInfo = "Free Pony Express Delivery!"; // App does not have functionality to change shipping info, so this is the expected value
+        String actualShippingInfo = checkoutStepTwoPage.get().getShippingValueLabel().getText();
+
+        Assert.assertEquals(actualShippingInfo, expectedShippingInfo, "Shipping information does not match expected value");
+    }
+
+    @Test
+    public void testPriceCalculations() {
+        double expectedSubtotal = checkoutStepTwoPage.get().calculateItemTotal();
+        double expectedTax = checkoutStepTwoPage.get().calculateTax();
+        double expectedTotal = checkoutStepTwoPage.get().calculateTotal();
+
+        double actualSubtotal = checkoutStepTwoPage.get().extractPriceFromLabel(checkoutStepTwoPage.get().getSubtotalLabel());
+        double actualTax = checkoutStepTwoPage.get().extractPriceFromLabel(checkoutStepTwoPage.get().getTaxLabel());
+        double actualTotal = checkoutStepTwoPage.get().extractPriceFromLabel(checkoutStepTwoPage.get().getTotalLabel());
+
+        softAssert.get().assertEquals(expectedSubtotal, actualSubtotal, "Subtotal does not match expected value");
+        softAssert.get().assertEquals(expectedTax, actualTax, "Tax does not match expected value");
+        softAssert.get().assertEquals(expectedTotal, actualTotal, "Total does not match expected value");
+
+        softAssert.get().assertAll();
+    }
 }

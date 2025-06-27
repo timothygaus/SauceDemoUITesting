@@ -167,13 +167,13 @@ This document will be used to track the implementation of planned test cases for
 
 ### Product Information
 - [x] Verify that, for each product present, the following are correct, based on the product’s name; product description, product price
-- [ ] Verify that the quantity is correct based on previous selections
-- [ ] Verify that the user can navigate to the product page for any item by clicking on the product’s name
+- [x] Verify that the quantity is correct based on previous selections
+- [x] Verify that the user can navigate to the product page for any item by clicking on the product’s name
 
 ### Checkout Information
-- [ ] Verify that the payment information matches what was previously entered
-- [ ] Verify that the shipping information matches what was previously entered
-- [ ] Verify that the price, tax, and total information is correct
+- [x] Verify that the payment information matches what was previously entered
+- [x] Verify that the shipping information matches what was previously entered
+- [x] Verify that the price, tax, and total information is correct
 
 ## Checkout Complete Page
 ### UI Element Presence

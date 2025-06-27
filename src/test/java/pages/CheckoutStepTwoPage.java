@@ -107,6 +107,7 @@ public class CheckoutStepTwoPage extends BasePage {
     public WebElement getFinishButton() {return finishButton;}
     public MenuComponent getMenuComponent() {return menuComponent;}
     public List<InventoryItem> getAddedCartItems() {return addedCartItems;}
+    public double getTaxRate() {return 0.08;}
 
     public void setAddedCartItems(List<InventoryItem> addedCartItems) {this.addedCartItems = addedCartItems;}
 
@@ -174,6 +175,17 @@ public class CheckoutStepTwoPage extends BasePage {
     }
 
     /**
+     * Clicks on a cart item and navigates to the InventoryItemPage for that item
+     * @param cartItem WebElement representing the cart item
+     * @return InventoryItemPage
+     */
+    public InventoryItemPage clickCartItem(WebElement cartItem) {
+        WebElement itemNameElement = getInventoryItemNameElement(cartItem);
+        click(webDriver, itemNameElement, () -> new InventoryItemPage(webDriver).isPageLoaded());
+        return new InventoryItemPage(webDriver);
+    }
+
+    /**
      * Clicks the cancel button and navigates to the inventory page
      * @return InventoryPage
      */
@@ -225,5 +237,55 @@ public class CheckoutStepTwoPage extends BasePage {
             cartItemsList.add(inventoryItem);
         }
         return cartItemsList;
+    }
+
+    /**
+     * Calculates the total price of all items in the cart by summing their prices. Tax is not included in this total.
+     * @return double total price of all items in the cart
+     */
+    public double calculateItemTotal() {
+        List<WebElement> items = getCartItems();
+        double totalPrice = 0.0;
+        for (WebElement item : items) {
+            String priceText = getInventoryItemPriceElement(item).getText().replace("$", "");
+            double price = Double.parseDouble(priceText);
+            totalPrice += price;
+        }
+        totalPrice = Math.round(totalPrice * 100.0) / 100.0; // Round to 2 decimal places
+        return totalPrice;
+    }
+
+    /**
+     * Calculates the tax based on the total price of items in the cart and the tax rate.
+     * The tax is calculated as 8% of the item total.
+     * @return double tax amount
+     */
+    public double calculateTax() {
+        double itemTotal = calculateItemTotal();
+        double tax = itemTotal * getTaxRate();
+        tax = Math.round(tax * 100.0) / 100.0; // Round to 2 decimal places
+        return tax;
+    }
+
+    /**
+     * Calculates the total price including tax.
+     * The total is calculated as the sum of the item total and the tax.
+     * @return double total price including tax
+     */
+    public double calculateTotal() {
+        return calculateItemTotal() + calculateTax();
+    }
+
+    /**
+     * Extracts the price from a label WebElement that contains a price in the format "$X.XX".
+     * @param label WebElement containing the price label
+     * @return double price extracted from the label
+     */
+    public double extractPriceFromLabel(WebElement label) {
+        java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\$([\\d.]+)").matcher(label.getText());
+        if(matcher.find()) {
+            return Double.parseDouble(matcher.group(1));
+        }
+        throw new IllegalArgumentException("Price not found in label: " + label.getText());
     }
 }
